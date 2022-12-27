@@ -22,6 +22,8 @@ const Navbar = () => {
       <NavLink to={"/my-task"}>My Task</NavLink>
       <NavLink to={"/add-task"}>Add Task</NavLink>
       <NavLink to={"/completed-task"}>Completed Task</NavLink>
+      <NavLink to={"/login"}>login</NavLink>
+      <NavLink to={"/register"}>register</NavLink>
     </div>
   );
 };
