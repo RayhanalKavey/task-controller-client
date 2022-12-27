@@ -1,13 +1,19 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import AuthProvider from "./CONTEXT/AuthProvider/AuthProvider";
+import ThemeProvider from "./CONTEXT/ThemeProvider/ThemeProvider";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <App />
+    <ThemeProvider>
+      <AuthProvider>
+        <App />
+      </AuthProvider>
+    </ThemeProvider>
   </React.StrictMode>
 );
 
