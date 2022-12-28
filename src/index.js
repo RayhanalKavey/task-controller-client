@@ -5,13 +5,16 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import AuthProvider from "./CONTEXT/AuthProvider/AuthProvider";
 import ThemeProvider from "./CONTEXT/ThemeProvider/ThemeProvider";
+import TaskProvider from "./CONTEXT/TaskProvider/TaskProvider";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <ThemeProvider>
       <AuthProvider>
-        <App />
+        <TaskProvider>
+          <App />
+        </TaskProvider>
       </AuthProvider>
     </ThemeProvider>
   </React.StrictMode>
