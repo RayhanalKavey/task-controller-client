@@ -18,7 +18,7 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState("");
   ///leading state to prevent the reload log out issue
   const [loading, setLoading] = useState(true);
-  const [reload, setReload] = useState(true);
+  const [reload, setReload] = useState(false);
 
   //Sign Up
   const createUser = (email, password) => {

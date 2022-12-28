@@ -1,24 +1,106 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "../../../CONTEXT/AuthProvider/AuthProvider";
 import useTitle from "../../../HOOKS/useTitle/useTitle";
+import toast from "react-hot-toast";
+import { FaGoogle } from "react-icons/fa";
 
 const Register = () => {
   useTitle("Register");
 
-  const [registerError, setRegisterError] = useState("");
+  const [signUpError, setSignUpError] = useState("");
   // React Hook Form
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm();
+
+  // Auth Context
+  const { createUser, updateUserProfile, googleLogin, setUser, setReload } =
+    useAuth();
+
+  // Redirect user where they want to go
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+
+  //image bb image hosting key
+  const imageHostKey = process.env.REACT_APP_imagebb_key;
+
   //handle register
   const handleRegister = (data) => {
-    console.log(data);
-    console.log(data.photoURL[0].name);
+    const { name, email, password, photoURL, accountType } = data;
+    setSignUpError("");
+    const image = photoURL[0];
+    const formData = new FormData();
+    formData.append("image", image);
+    // console.log("data", data);
+    // console.log("photoURL", photoURL);
+    // console.log("photoURL[0]", image);
+    /// send image to the dedicated image hosting server imgbb
+    const url = `https://api.imgbb.com/1/upload?key=${imageHostKey}`;
+    fetch(url, {
+      method: "POST",
+      body: formData,
+    })
+      .then((res) => res.json())
+      .then((imgData) => {
+        if (imgData.success) {
+          const photoURL = imgData.data.url;
+          ///Create user with email and password starT
+          createUser(email, password)
+            .then((result) => {
+              const user = result.user;
+              toast.success(`Welcome ${user?.displayName}`);
+              handleUpdateUserProfile(name, photoURL, email, accountType);
+            })
+            .catch((error) => {
+              setSignUpError(error.message);
+            });
+          // //Create user with email and password enD
+        }
+      });
   };
-  console.log(errors);
+  /// Update user profile.
+  const handleUpdateUserProfile = (name, photoURL) => {
+    const profile = {
+      displayName: name,
+      photoURL: photoURL,
+    };
+    updateUserProfile(profile)
+      .then((result) => {
+        setReload(true); //reload when successfully signed up to update the photo
+
+        // Navigate user to the desired path
+        navigate(from, { replace: true });
+      })
+      .catch((error) => {
+        toast.error(error.message);
+      });
+  };
+
+  /// LogIn/sign up with google
+  const handleGoogleLogin = () => {
+    googleLogin()
+      .then((result) => {
+        const user = result.user;
+        setUser(user);
+
+        //Navigate user to the desired path
+        navigate(from, { replace: true });
+
+        toast.success(`Welcome ${user?.displayName}`);
+      })
+      .catch((error) => {
+        setSignUpError(error.message);
+      });
+  };
+
+  ///---------------------------
+  console.log("errors", errors);
+  //-------------------------------///---------------------------------------///
   return (
     <section className="bg-gray-50 dark:bg-gray-900">
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
@@ -58,11 +140,11 @@ const Register = () => {
                   {...register("photoURL", { required: "Image is required !" })}
                   className=" block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                   placeholder="your image"
-                  accept="image"
+                  accept="image/*"
                 />
 
                 {/* erroR message */}
-                {errors?.photoURL && (
+                {errors.photoURL && (
                   <p className="text-rose-500 mt-1">
                     {" "}
                     {errors.photoURL?.message}
@@ -125,47 +207,45 @@ const Register = () => {
                   </p>
                 )}
               </div>
-              {/* Terms and conditions */}
-              {/* <div className="flex items-center justify-between">
-                <div className="flex items-start">
-                  <div className="flex items-center h-5">
-                    <input
-                      id="remember"
-                      type="checkbox"
-                      className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
-                      required=""
-                    />
-                  </div>
-                  <div className="ml-3 text-sm">
-                    <label
-                      htmlFor="remember"
-                      className="text-gray-500 dark:text-gray-300"
-                    >
-                      Accept terms and conditions
-                    </label>
-                  </div>
-                </div>
-              </div> */}
-              {/* <input
-                className="w-full text-black bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+              {/* Submit */}
+              <button
                 type="submit"
-                value="Register"
-              /> */}
-              <input
-                className="btn btn-primary w-full mt-5 mb-1 text-black dark:text-white border py-2 cursor-pointer rounded-lg"
-                type="submit"
-                value="Register"
-              />
+                className="w-full text-black dark:text-white bg-gradient-to-br from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
+              >
+                Register
+              </button>
 
               <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                 Don’t have an account yet?{" "}
                 <Link
                   to="/login"
-                  className="font-medium text-primary-600 hover:underline dark:text-primary-500"
+                  className=" font-medium text-primary-600 hover:underline dark:text-primary-500"
                 >
                   Login
                 </Link>
               </p>
+              {signUpError && (
+                <label className="label">
+                  <span className="label-text-alt text-error">
+                    {signUpError}
+                  </span>
+                </label>
+              )}
+              {/* divider */}
+              <div className="relative flex py-1 items-center">
+                <div className="flex-grow border-t border-gray-400"></div>
+                <span className="flex-shrink mx-4 text-gray-400">or</span>
+                <div className="flex-grow border-t border-gray-400"></div>
+              </div>
+              {/* google sign in */}
+
+              <button
+                type="submit"
+                onClick={handleGoogleLogin}
+                className="flex justify-center w-full text-black dark:text-white bg-gradient-to-br from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
+              >
+                <FaGoogle />
+              </button>
             </form>
           </div>
         </div>
