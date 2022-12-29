@@ -7,6 +7,8 @@ import { useTask } from "../../CONTEXT/TaskProvider/TaskProvider";
 import { useAuth } from "../../CONTEXT/AuthProvider/AuthProvider";
 
 const AddCommentForm = ({ task }) => {
+  const {} = task;
+
   const { setRefetching } = useTask();
   const { user } = useAuth();
   //------------- redirect user
@@ -20,18 +22,18 @@ const AddCommentForm = ({ task }) => {
   const handleComment = (data) => {
     const { comment } = data;
     console.log(comment);
-    const addComment = {
-      taskID: task?._id,
-      commentDetails: comment,
-      userEmail: user?.email,
-    };
+    // const addComment = {
+    //   taskID: task?._id,
+    //   commentDetails: comment,
+    //   userEmail: user?.email,
+    // };
 
-    fetch(`${process.env.REACT_APP_api_url}/comments`, {
-      method: "POST",
+    fetch(`${process.env.REACT_APP_api_url}/tasks/comments/${task?._id}`, {
+      method: "PUT",
       headers: {
         "content-type": "application/json",
       },
-      body: JSON.stringify(addComment),
+      body: JSON.stringify({ comment }),
     })
       .then((res) => res.json())
       .then((result) => {

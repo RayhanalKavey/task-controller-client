@@ -15,10 +15,10 @@ const CompletedTask = () => {
   } = useTask();
   // console.log(data);
 
-  ///handle Advertisement --4 workinG
+  ///handle Advertisement --1
   const handleNotCompleteTask = (task) => {
-    console.log("click");
-    console.log("task", task?._id);
+    // console.log("click");
+    // console.log("task", task?._id);
     fetch(`${process.env.REACT_APP_api_url}/tasks/${task?._id}`, {
       method: "PUT",
     })
@@ -76,8 +76,8 @@ const CompletedTask = () => {
       ));
   }
   return (
-    <div className="h-scree">
-      <h5 className="mb-5 text-center  mt-8 text-xl font-medium text-teal-800 dark:text-white">
+    <div className="h-scree bg-gray-50 dark:bg-teal-700">
+      <h5 className="mb-5 text-center  pt-8 text-xl font-medium text-teal-800 dark:text-white">
         Completed Tasks
       </h5>
       {content}

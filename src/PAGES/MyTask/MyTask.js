@@ -72,8 +72,8 @@ const MyTask = () => {
   }
 
   return (
-    <div className="h-screen">
-      <h5 className="mb-5 text-center  mt-8 text-xl font-medium text-teal-800 dark:text-white">
+    <div className="h-screen bg-gray-50 dark:bg-teal-700">
+      <h5 className="mb-5 text-center  py-8 text-xl font-medium text-teal-800 dark:text-white">
         My Tasks
       </h5>
       {content}

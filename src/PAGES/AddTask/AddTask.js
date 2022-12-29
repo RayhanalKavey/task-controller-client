@@ -83,12 +83,13 @@ const AddTask = () => {
   }
 
   return (
-    <div className="h-screen">
-      <h5 className="mb-5 text-center  mt-8 text-xl font-medium text-teal-800 dark:text-white">
+    <div className="h-screen bg-gray-50 dark:bg-teal-700">
+      <h5 className="mb-5 text-center  pt-8 text-xl font-medium text-teal-800 dark:text-white">
         Add Task
       </h5>
       <form
-        className="flex gap-8 flex-col w-[98%] mx-auto"
+        className="flex flex-col w-[96%] p-5 gap-8 mb-5 mx-auto bg-white border border-gray-200 rounded-md shadow-md dark:bg-gray-800 dark:border-gray-700 mt-4"
+        // className="flex gap-8 flex-col w-[98%] mx-auto"
         onSubmit={handleSubmit(handleTask)}
       >
         {/*/// Title */}
