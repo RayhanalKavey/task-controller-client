@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { useAuth } from "../../../CONTEXT/AuthProvider/AuthProvider";
 import toast from "react-hot-toast";
 import { FaGoogle } from "react-icons/fa";
+import Button from "../../../COMPONENTS/Button/Button";
 
 const Login = () => {
   useTitle("Login");
@@ -129,12 +130,10 @@ const Login = () => {
                 </a> */}
               </div>
               {/* Submit */}
-              <button
-                type="submit"
-                className="w-full bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 shadow-lg shadow-teal-500/50 dark:shadow-lg dark:shadow-teal-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
-              >
+
+              <Button CClass="w-full" Type="submit">
                 Login
-              </button>
+              </Button>
               <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                 Don’t have an account yet?{" "}
                 <Link
@@ -150,13 +149,14 @@ const Login = () => {
                 <span className="flex-shrink mx-4 text-gray-400">or</span>
                 <div className="flex-grow border-t border-gray-400"></div>
               </div>
-              <button
-                type="submit"
-                onClick={handleGoogleLogin}
-                className="w-full flex justify-center bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 shadow-lg shadow-teal-500/50 dark:shadow-lg dark:shadow-teal-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
+              <Button
+                CClass="w-full flex justify-center"
+                clickHandler={handleGoogleLogin}
               >
+                {" "}
                 <FaGoogle />
-              </button>
+              </Button>
+
               {loginError && (
                 <label className="text-center">
                   <p className="text-rose-500 mt-3">{loginError}</p>

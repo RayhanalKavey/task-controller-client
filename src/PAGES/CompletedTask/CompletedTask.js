@@ -32,7 +32,7 @@ const CompletedTask = () => {
   return (
     <div className="h-screen">
       <h5 className="mb-5 text-center  mt-8 text-xl font-medium text-gray-900 dark:text-white">
-        My Tasks
+        Completed Tasks
       </h5>
       {content}
     </div>
