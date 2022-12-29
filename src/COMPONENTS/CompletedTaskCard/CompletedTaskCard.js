@@ -14,12 +14,17 @@ const CompletedTaskCard = ({
     taskComment,
     userEmail,
   },
+  task,
+  handleNotCompleteTask,
+  handleDeleteTask,
 }) => {
   return (
     <div className="w-[96%] mb-5 mx-auto bg-white border border-gray-200 rounded-md shadow-md dark:bg-gray-800 dark:border-gray-700 mt-4">
       <div className="flex justify-end px-4 pt-4 gap-3 dark:text-white">
         {/* <TbEdit size={"1.8rem"} style={{ cursor: "pointer" }} /> */}
-        <RiDeleteBin6Line size={"1.7rem"} style={{ cursor: "pointer" }} />
+        <Button clickHandler={() => handleDeleteTask(task)}>
+          <RiDeleteBin6Line size={"1.7rem"} style={{ cursor: "pointer" }} />
+        </Button>
       </div>
       <div className="flex flex-col px-5  pb-5 mt-8">
         <h5 className="mb-1 text-xl font-medium text-teal-800 dark:text-white">
@@ -37,8 +42,11 @@ const CompletedTaskCard = ({
           </ul>
         </div>
         <div className="flex  flex-wrap items-center justify-center mt-4 space-x-3 md:mt-6 ">
-          <AddCommentForm></AddCommentForm>
-          <Button CClass="mt-2">Not Completed!!</Button>
+          <AddCommentForm task={task}></AddCommentForm>
+
+          <Button clickHandler={() => handleNotCompleteTask(task)}>
+            Not Completed!!
+          </Button>
         </div>
       </div>
     </div>

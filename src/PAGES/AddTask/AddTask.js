@@ -5,10 +5,11 @@ import useTitle from "../../HOOKS/useTitle/useTitle";
 import { useForm } from "react-hook-form";
 import { useAuth } from "../../CONTEXT/AuthProvider/AuthProvider";
 import toast from "react-hot-toast";
+import { useTask } from "../../CONTEXT/TaskProvider/TaskProvider";
 
 const AddTask = () => {
   useTitle("Add Task");
-
+  const { setRefetching } = useTask();
   const { user } = useAuth();
   //------------- redirect user
   const navigate = useNavigate();
@@ -62,7 +63,7 @@ const AddTask = () => {
   };
 
   function postTaskForm(task) {
-    console.log("task", task);
+    // console.log("task", task);
     // /// --2 save product information to the database
     fetch(`${process.env.REACT_APP_api_url}/tasks`, {
       method: "POST",
@@ -73,7 +74,8 @@ const AddTask = () => {
     })
       .then((res) => res.json())
       .then((result) => {
-        console.log("result", result);
+        // console.log("result", result);
+        setRefetching(true);
         toast.success(`Task is added.`);
         // //Navigate user to the desired path
         navigate("/my-task");

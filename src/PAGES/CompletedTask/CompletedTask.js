@@ -1,15 +1,52 @@
 import React from "react";
 import CompletedTaskCard from "../../COMPONENTS/CompletedTaskCard/CompletedTaskCard";
 import TaskLoading from "../../COMPONENTS/TaskLoading/TaskLoading";
+import { useAuth } from "../../CONTEXT/AuthProvider/AuthProvider";
 import { useTask } from "../../CONTEXT/TaskProvider/TaskProvider";
 import useTitle from "../../HOOKS/useTitle/useTitle";
+import toast from "react-hot-toast";
 
 const CompletedTask = () => {
   useTitle("Completed Task");
+  const { user } = useAuth();
   const {
     state: { data, loading, error },
+    setRefetching,
   } = useTask();
   // console.log(data);
+
+  ///handle Advertisement --4 workinG
+  const handleNotCompleteTask = (task) => {
+    console.log("click");
+    console.log("task", task?._id);
+    fetch(`${process.env.REACT_APP_api_url}/tasks/${task?._id}`, {
+      method: "PUT",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.modifiedCount > 0) {
+          toast.success(`Done with task ${task?.taskTitle}!`);
+          setRefetching(true);
+          // console.log("task", task?.isComplete);
+        }
+      });
+  };
+
+  const handleDeleteTask = (task) => {
+    console.log("task", task?._id);
+
+    fetch(`${process.env.REACT_APP_api_url}/tasks/${task?._id}`, {
+      method: "DELETE",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.deletedCount > 0) {
+          toast.success(`Task deleted successfully!!`);
+          setRefetching(true);
+        }
+      });
+  };
+
   let content;
   if (loading) {
     content = <TaskLoading />;
@@ -25,12 +62,21 @@ const CompletedTask = () => {
     );
   }
   if (!loading && !error && data.length) {
-    content = data?.map((task, i) => (
-      <CompletedTaskCard key={i} task={task}></CompletedTaskCard>
-    ));
+    content = data
+      ?.filter(
+        (task) => task.isComplete === true && user?.email === task.userEmail
+      )
+      ?.map((task, i) => (
+        <CompletedTaskCard
+          key={i}
+          task={task}
+          handleNotCompleteTask={handleNotCompleteTask}
+          handleDeleteTask={handleDeleteTask}
+        ></CompletedTaskCard>
+      ));
   }
   return (
-    <div className="h-screen">
+    <div className="h-scree">
       <h5 className="mb-5 text-center  mt-8 text-xl font-medium text-teal-800 dark:text-white">
         Completed Tasks
       </h5>

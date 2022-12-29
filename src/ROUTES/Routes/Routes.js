@@ -5,6 +5,7 @@ import Login from "../../PAGES/Authentication/Login/Login";
 import Register from "../../PAGES/Authentication/Register/Register";
 import CompletedTask from "../../PAGES/CompletedTask/CompletedTask";
 import MyTask from "../../PAGES/MyTask/MyTask";
+import PrivateRoute from "../PrivateRoute/PrivateRoute";
 
 const router = createBrowserRouter([
   {
@@ -13,19 +14,38 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <MyTask></MyTask>,
+        element: (
+          <PrivateRoute>
+            {" "}
+            <MyTask></MyTask>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/my-task",
-        element: <MyTask></MyTask>,
+        element: (
+          <PrivateRoute>
+            {" "}
+            <MyTask></MyTask>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/add-task",
-        element: <AddTask></AddTask>,
+        element: (
+          <PrivateRoute>
+            {" "}
+            <AddTask></AddTask>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/completed-task",
-        element: <CompletedTask></CompletedTask>,
+        element: (
+          <PrivateRoute>
+            <CompletedTask></CompletedTask>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/login",

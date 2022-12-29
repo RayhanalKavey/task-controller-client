@@ -3,6 +3,7 @@ import { BsThreeDots } from "react-icons/bs";
 import { TbEdit } from "react-icons/tb";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import TextPhotoForm from "../TextPhotoForm/TextPhotoForm";
+import Button from "../Button/Button";
 
 const MyTaskCard = ({
   task: {
@@ -15,25 +16,38 @@ const MyTaskCard = ({
     taskComment,
     userEmail,
   },
+  task,
+  handleCompleteTask,
+  handleDeleteTask,
 }) => {
   // console.log(taskTitle);
   return (
     <div className="w-[96%] mb-5 mx-auto bg-white border border-gray-200 rounded-md shadow-md dark:bg-gray-800 dark:border-gray-700 mt-4">
-      <div className="flex justify-end px-4 pt-4 gap-3 dark:text-white">
-        <TbEdit size={"1.8rem"} style={{ cursor: "pointer" }} />
-        <RiDeleteBin6Line size={"1.7rem"} style={{ cursor: "pointer" }} />
-      </div>
-      <div className="flex flex-col px-5  pb-5 mt-8">
+      <div className="flex justify-end px-4 pt-4 gap-3 dark:text-white"></div>
+      <div className="flex flex-col px-5  pb-5 mt-3">
         <h5 className="mb-1 text-xl font-medium text-teal-800 dark:text-white">
           <span>Title: </span> {taskTitle}
         </h5>
         <p className="text-sm text-gray-500 dark:text-gray-400">
           {taskDetails}
         </p>
-        <div className="flex flex-wrap self-end mt-4 space-x-3 md:mt-6 mr-5 gap-1 items-center">
-          <button className=" text-black bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 shadow-lg shadow-teal-500/50 dark:shadow-lg dark:shadow-teal-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
+        <div className="flex justify-center flex-wrap self-start mt-4 space-x-3 md:mt-6 mr-5 gap-1 items-center">
+          <Button clickHandler={() => handleCompleteTask(task)}>
             Completed
-          </button>
+          </Button>
+
+          <Button>
+            {" "}
+            <TbEdit size={"1rem"} />
+          </Button>
+          <Button
+            clickHandler={() => handleDeleteTask(task)}
+            CClass="bg-pink-500"
+            style={{ cursor: "pointer", backgroundColor: "pink" }}
+          >
+            {" "}
+            <RiDeleteBin6Line size={"1rem"} style={{ cursor: "pointer" }} />
+          </Button>
         </div>
       </div>
     </div>

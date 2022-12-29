@@ -3,14 +3,47 @@ import useTitle from "../../HOOKS/useTitle/useTitle";
 import { useTask } from "../../CONTEXT/TaskProvider/TaskProvider";
 import MyTaskCard from "../../COMPONENTS/MyTaskCard/MyTaskCard";
 import TaskLoading from "../../COMPONENTS/TaskLoading/TaskLoading";
+import toast from "react-hot-toast";
 
 const MyTask = () => {
   useTitle("My Task");
   //nested destructuring
   const {
     state: { data, loading, error },
+    setRefetching,
   } = useTask();
   // console.log(data);
+
+  //handle Advertisement --2
+  const handleCompleteTask = (task) => {
+    // console.log("task", task?._id);
+    fetch(`${process.env.REACT_APP_api_url}/tasks/${task?._id}`, {
+      method: "PUT",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.modifiedCount > 0) {
+          toast.success(`Done with task ${task?.taskTitle}!`);
+          setRefetching(true);
+          // console.log("task", task?.isComplete);
+        }
+      });
+  };
+  // delete task --2
+  const handleDeleteTask = (task) => {
+    console.log("task", task?._id);
+
+    fetch(`${process.env.REACT_APP_api_url}/tasks/${task?._id}`, {
+      method: "DELETE",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.deletedCount > 0) {
+          toast.success(`Task deleted successfully!!`);
+          setRefetching(true);
+        }
+      });
+  };
   let content;
   if (loading) {
     content = <TaskLoading />;
@@ -26,10 +59,18 @@ const MyTask = () => {
     );
   }
   if (!loading && !error && data.length) {
-    content = data?.map((task, i) => (
-      <MyTaskCard key={i} task={task}></MyTaskCard>
-    ));
+    content = data
+      ?.filter((task) => task.isComplete !== true)
+      ?.map((task, i) => (
+        <MyTaskCard
+          key={task?._id}
+          task={task}
+          handleCompleteTask={handleCompleteTask}
+          handleDeleteTask={handleDeleteTask}
+        ></MyTaskCard>
+      ));
   }
+
   return (
     <div className="h-screen">
       <h5 className="mb-5 text-center  mt-8 text-xl font-medium text-teal-800 dark:text-white">
