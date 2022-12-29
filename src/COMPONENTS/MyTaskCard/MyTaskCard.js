@@ -4,6 +4,7 @@ import { TbEdit } from "react-icons/tb";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import TextPhotoForm from "../TextPhotoForm/TextPhotoForm";
 import Button from "../Button/Button";
+import DeleteButton from "../Button/DeleteButton";
 
 const MyTaskCard = ({
   task: {
@@ -40,14 +41,14 @@ const MyTaskCard = ({
             {" "}
             <TbEdit size={"1rem"} />
           </Button>
-          <Button
+          <DeleteButton
             clickHandler={() => handleDeleteTask(task)}
             CClass="bg-pink-500"
-            style={{ cursor: "pointer", backgroundColor: "pink" }}
+            style={{ cursor: "pointer" }}
           >
             {" "}
             <RiDeleteBin6Line size={"1rem"} style={{ cursor: "pointer" }} />
-          </Button>
+          </DeleteButton>
         </div>
       </div>
     </div>

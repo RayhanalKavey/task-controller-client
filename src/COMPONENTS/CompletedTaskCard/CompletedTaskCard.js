@@ -2,6 +2,7 @@ import React from "react";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import AddCommentForm from "../AddCommentForm/AddCommentForm";
 import Button from "../Button/Button";
+import DeleteButton from "../Button/DeleteButton";
 
 const CompletedTaskCard = ({
   task: {
@@ -26,9 +27,9 @@ const CompletedTaskCard = ({
         <Button clickHandler={() => handleNotCompleteTask(task)}>
           Not Completed!!
         </Button>
-        <Button clickHandler={() => handleDeleteTask(task)}>
+        <DeleteButton clickHandler={() => handleDeleteTask(task)}>
           <RiDeleteBin6Line size={"1.7rem"} style={{ cursor: "pointer" }} />
-        </Button>
+        </DeleteButton>
       </div>
       <div className="flex flex-col px-5  pb-5 mt-2">
         <h5 className="mb-0 text-xl font-medium text-teal-800 dark:text-white">
@@ -39,7 +40,7 @@ const CompletedTaskCard = ({
         </p>
         {/* ///comments  */}
         {task?.taskComment && (
-          <div className="mt-4 ">
+          <div className="mt-4 dark:text-white">
             <h2 className="font-bold mb-1"> Comments</h2>
             <ul className="flex flex-col gap-2">
               <li className="border border-1 p-2 rounded-md">
