@@ -41,7 +41,7 @@ const Login = () => {
         //Navigate user to the desired path
         navigate(from, { replace: true });
 
-        toast.success(`Welcome ${user?.displayName}`);
+        toast.success(`Welcome to your Task Controller`);
       })
       .catch((error) => {
         setLoginError(error.message);

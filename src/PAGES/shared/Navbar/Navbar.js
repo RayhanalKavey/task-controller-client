@@ -43,20 +43,22 @@ const Navbar = () => {
               Logout
             </Link>
           </li>
-          {user?.photoURL ? (
-            <li className="mr-1 sm:mr-5">
-              <img
-                className="block w-10 h-10 rounded-full py-2 pl-3  text-gray-700  hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-teal-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-                src={user?.photoURL}
-                alt=""
-                title={user?.displayName}
-              />
-            </li>
-          ) : (
-            <li title={user?.displayName}>
-              <FaUser size="1.8rem" />
-            </li>
-          )}
+          <Link to={"/profile"}>
+            {user?.photoURL ? (
+              <li className="mr-1 sm:mr-5">
+                <img
+                  className="block w-10 h-10 rounded-full py-2 pl-3  text-gray-700  hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-teal-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                  src={user?.photoURL}
+                  alt=""
+                  title={user?.displayName}
+                />
+              </li>
+            ) : (
+              <li title={user?.displayName}>
+                <FaUser size="1.8rem" />
+              </li>
+            )}
+          </Link>
         </>
       ) : (
         <>

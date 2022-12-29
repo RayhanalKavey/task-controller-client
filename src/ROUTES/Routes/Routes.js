@@ -5,6 +5,7 @@ import Login from "../../PAGES/Authentication/Login/Login";
 import Register from "../../PAGES/Authentication/Register/Register";
 import CompletedTask from "../../PAGES/CompletedTask/CompletedTask";
 import MyTask from "../../PAGES/MyTask/MyTask";
+import Profile from "../../PAGES/Profile/Profile";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
 
 const router = createBrowserRouter([
@@ -54,6 +55,14 @@ const router = createBrowserRouter([
       {
         path: "/register",
         element: <Register></Register>,
+      },
+      {
+        path: "/profile",
+        element: (
+          <PrivateRoute>
+            <Profile></Profile>{" "}
+          </PrivateRoute>
+        ),
       },
     ],
   },

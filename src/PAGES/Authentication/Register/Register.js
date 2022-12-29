@@ -52,9 +52,12 @@ const Register = () => {
           if (imgData.success) {
             const photoURL = imgData.data.url;
 
-            handleUpdateUserProfile(name, photoURL, email, accountType);
+            handleUpdateUserProfile(name, photoURL);
             // //Create user with email and password enD
           }
+        })
+        .catch((error) => {
+          setSignUpError(error.message);
         });
   };
 
@@ -63,7 +66,11 @@ const Register = () => {
     createUser(email, password)
       .then((result) => {
         const user = result.user;
-        toast.success(`Welcome ${user?.displayName}`);
+        toast.success(
+          `Welcome!! You registered with ${user?.displayName}. Update Your profile!!`
+        );
+        // Navigate user to the desired path
+        navigate(from, { replace: true });
       })
       .catch((error) => {
         setSignUpError(error.message);
@@ -84,7 +91,7 @@ const Register = () => {
         navigate(from, { replace: true });
       })
       .catch((error) => {
-        toast.error(error.message);
+        setSignUpError(error.message);
       });
   };
 
@@ -106,7 +113,7 @@ const Register = () => {
   };
 
   ///---------------------------
-  // console.log("errors", errors);
+  console.log("errors", errors);
   //-------------------------------///---------------------------------------///
   return (
     <section className="bg-gray-50 dark:bg-teal-500">
@@ -148,6 +155,7 @@ const Register = () => {
                   className=" block w-full text-sm text-teal-800 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                   placeholder="your image"
                   accept="image/*"
+                  required
                 />
 
                 {/* erroR message */}
@@ -250,7 +258,7 @@ const Register = () => {
                 type="submit"
                 onClick={handleGoogleLogin}
                 // className="flex justify-center w-full text-black dark:text-white bg-gradient-to-br from-cyan-500 to-teal-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
-                className="w-full flex justify-center bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 shadow-lg shadow-teal-500/50 dark:shadow-lg dark:shadow-teal-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
+                className="w-full dark:text-white flex justify-center bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 shadow-lg shadow-teal-500/50 dark:shadow-lg dark:shadow-teal-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
               >
                 <FaGoogle />
               </button>
