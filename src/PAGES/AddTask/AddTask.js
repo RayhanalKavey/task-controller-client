@@ -1,9 +1,167 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
+import Button from "../../COMPONENTS/Button/Button";
 import useTitle from "../../HOOKS/useTitle/useTitle";
+import { useForm } from "react-hook-form";
+import { useAuth } from "../../CONTEXT/AuthProvider/AuthProvider";
+import toast from "react-hot-toast";
 
 const AddTask = () => {
   useTitle("Add Task");
-  return <div>This is add task</div>;
+
+  const { user } = useAuth();
+  //------------- redirect user
+  const navigate = useNavigate();
+
+  ///Hook form
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  //image bb image hosting key
+  const imageHostKey = process.env.REACT_APP_imagebb_key;
+
+  // console.log(user?.email);
+
+  ///--------------------------------------
+  const handleTask = (data) => {
+    const { taskTitle, description, photoURL } = data;
+    // img: photoURL,
+    const task = {
+      taskTitle: taskTitle,
+      taskDetails: description,
+      photoText: "A laptop resell website",
+      isComplete: false,
+      userEmail: user?.email,
+    };
+    const image = photoURL[0];
+    const formData = new FormData();
+    formData.append("image", image);
+    // console.log("data", data);
+    // console.log("photoURL", photoURL);
+    // console.log("photoURL[0]", image);
+    /// send image to the dedicated image hosting server imgbb
+    const url = `https://api.imgbb.com/1/upload?key=${imageHostKey}`;
+    image !== undefined &&
+      fetch(url, {
+        method: "POST",
+        body: formData,
+      })
+        .then((res) => res.json())
+        .then((imgData) => {
+          if (imgData.success) {
+            const photoURL = imgData.data.url;
+
+            ///// add to media
+          }
+        });
+
+    postTaskForm(task);
+  };
+
+  function postTaskForm(task) {
+    console.log("task", task);
+    // /// --2 save product information to the database
+    fetch(`${process.env.REACT_APP_api_url}/tasks`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(task),
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        console.log("result", result);
+        toast.success(`Task is added.`);
+        // //Navigate user to the desired path
+        navigate("/my-task");
+      });
+  }
+
+  return (
+    <div className="h-screen">
+      <h5 className="mb-5 text-center  mt-8 text-xl font-medium text-teal-800 dark:text-white">
+        Add Task
+      </h5>
+      <form
+        className="flex gap-8 flex-col w-[98%] mx-auto"
+        onSubmit={handleSubmit(handleTask)}
+      >
+        {/*/// Title */}
+        <div>
+          <label
+            htmlFor="message"
+            className="block mb-2 text-sm font-medium text-teal-800 dark:text-white"
+          >
+            Title
+          </label>
+          <textarea
+            id="message"
+            rows="4"
+            type="text"
+            {...register("taskTitle", {
+              required: "Task description is required !",
+            })}
+            className="block h-10 p-2.5 w-full text-sm text-teal-800 bg-gray-50 rounded-lg border border-gray-300 focus:ring-teal-500 focus:border-teal-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-teal-500 dark:focus:border-teal-500"
+            placeholder="Add title..."
+          ></textarea>
+          {/* erroR message */}
+          {errors?.taskTitle && (
+            <p className="text-rose-500 mt-1"> {errors.taskTitle?.message}</p>
+          )}
+        </div>
+        {/*/// task */}
+        <div>
+          <label
+            htmlFor="message"
+            className="block mb-2 text-sm font-medium text-teal-800 dark:text-white"
+          >
+            Task
+          </label>
+          <textarea
+            id="message"
+            rows="4"
+            type="text"
+            {...register("description", {
+              required: "Task description is required !",
+            })}
+            className="block p-2.5 w-full text-sm text-teal-800 bg-gray-50 rounded-lg border border-gray-300 focus:ring-teal-500 focus:border-teal-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-teal-500 dark:focus:border-teal-500"
+            placeholder="Add task description..."
+          ></textarea>
+          {/* erroR message */}
+          {errors?.description && (
+            <p className="text-rose-500 mt-1"> {errors.description?.message}</p>
+          )}
+        </div>
+        {/*/// Photo URL */}
+        <div>
+          <label className="block mb-2 text-sm font-medium text-teal-800 dark:text-white">
+            Image
+          </label>
+          <input
+            type="file"
+            {...register("photoURL", { required: "Image is required !" })}
+            className=" block w-full text-sm text-gray-800 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-teal-600 dark:placeholder-gray-400"
+            placeholder="your image"
+            accept="image/*"
+          />
+
+          {/* erroR message */}
+          {errors.photoURL && (
+            <p className="text-rose-500 mt-1"> {errors.photoURL?.message}</p>
+          )}
+        </div>
+        <div className="flex justify-start ">
+          <Button Type="submit" CclassName="">
+            Add
+            <span className="sr-only">Send message</span>
+          </Button>
+        </div>
+      </form>
+    </div>
+  );
 };
 
 export default AddTask;

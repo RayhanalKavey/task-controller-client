@@ -19,7 +19,7 @@ const CompletedTask = () => {
   }
   if (!loading && !error && data.length === 0) {
     content = (
-      <p className="text-center mt-8 text-lg text-gray-900 dark:text-white">
+      <p className="text-center mt-8 text-lg text-teal-800 dark:text-white">
         No task to do?? Add some task!!
       </p>
     );
@@ -31,7 +31,7 @@ const CompletedTask = () => {
   }
   return (
     <div className="h-screen">
-      <h5 className="mb-5 text-center  mt-8 text-xl font-medium text-gray-900 dark:text-white">
+      <h5 className="mb-5 text-center  mt-8 text-xl font-medium text-teal-800 dark:text-white">
         Completed Tasks
       </h5>
       {content}

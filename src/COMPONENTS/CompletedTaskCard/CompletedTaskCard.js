@@ -22,12 +22,20 @@ const CompletedTaskCard = ({
         <RiDeleteBin6Line size={"1.7rem"} style={{ cursor: "pointer" }} />
       </div>
       <div className="flex flex-col px-5  pb-5 mt-8">
-        <h5 className="mb-1 text-xl font-medium text-gray-900 dark:text-white">
-          <span>Title: </span> {taskTitle}
+        <h5 className="mb-1 text-xl font-medium text-teal-800 dark:text-white">
+          <span className="font-bold">Title: </span> {taskTitle}
         </h5>
         <p className="text-sm text-gray-500 dark:text-gray-400">
           {taskDetails}
         </p>
+        <div className="mt-4 ">
+          <h2 className="font-bold mb-1"> Comments</h2>
+          <ul className="flex flex-col gap-2">
+            <li className="border border-1 p-2">Comment 1</li>
+            <li className="border border-1 p-2">Comment 1</li>
+            <li className="border border-1 p-2">Comment 1</li>
+          </ul>
+        </div>
         <div className="flex  flex-wrap items-center justify-center mt-4 space-x-3 md:mt-6 ">
           <AddCommentForm></AddCommentForm>
           <Button CClass="mt-2">Not Completed!!</Button>

@@ -24,7 +24,7 @@ const MyTaskCard = ({
         <RiDeleteBin6Line size={"1.7rem"} style={{ cursor: "pointer" }} />
       </div>
       <div className="flex flex-col px-5  pb-5 mt-8">
-        <h5 className="mb-1 text-xl font-medium text-gray-900 dark:text-white">
+        <h5 className="mb-1 text-xl font-medium text-teal-800 dark:text-white">
           <span>Title: </span> {taskTitle}
         </h5>
         <p className="text-sm text-gray-500 dark:text-gray-400">
