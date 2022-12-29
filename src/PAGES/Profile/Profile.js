@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useAuth } from "../../CONTEXT/AuthProvider/AuthProvider";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -7,6 +7,8 @@ import useTitle from "../../HOOKS/useTitle/useTitle";
 const Profile = () => {
   useTitle("Update Profile");
   const navigate = useNavigate();
+  const [updateError, setUpdateError] = useState("");
+
   // React Hook Form
   const {
     register,
@@ -14,27 +16,17 @@ const Profile = () => {
     handleSubmit,
   } = useForm();
   // Auth Context
-  const {
-    logout,
-    setUser,
-    user,
-    updateUserProfile,
-    googleLogin,
-
-    setReload,
-  } = useAuth();
+  const { user, updateUserProfile, setReload } = useAuth();
 
   //image bb image hosting key
   const imageHostKey = process.env.REACT_APP_imagebb_key;
   const handleUpdateUser = (data) => {
-    const { name, email, password, photoURL, accountType } = data;
-    // setSignUpError("");
+    const { name, photoURL } = data;
+    setUpdateError("");
 
     const image = photoURL[0];
     const formData = new FormData();
     formData.append("image", image);
-    // console.log("data", data);
-    // console.log("photoURL", photoURL);
     console.log("photoURL[0]", image);
     /// send image to the dedicated image hosting server imgbb
     const url = `https://api.imgbb.com/1/upload?key=${imageHostKey}`;
@@ -50,9 +42,6 @@ const Profile = () => {
             handleUpdateUserProfile(name, photoURL);
           }
         });
-    // .catch((error) => {
-    //   setSignUpError(error.message);
-    // });
   };
   /// Update user profile.
   const handleUpdateUserProfile = (name, photoURL) => {
@@ -62,13 +51,12 @@ const Profile = () => {
     };
     updateUserProfile(profile)
       .then((result) => {
-        setReload(true); //reload when successfully signed up to update the photo
-
+        setReload(true);
         // Navigate user to the desired path
         navigate("/my-task");
       })
       .catch((error) => {
-        // setSignUpError(error.message);
+        setUpdateError(error.message);
       });
   };
   return (
@@ -157,13 +145,13 @@ const Profile = () => {
                 Update
               </button>
 
-              {/* {signUpError && (
+              {updateError && (
                 <label className="label">
                   <span className="label-text-alt text-error">
-                    {signUpError}
+                    {updateError}
                   </span>
                 </label>
-              )} */}
+              )}
             </form>
           </div>
         </div>
