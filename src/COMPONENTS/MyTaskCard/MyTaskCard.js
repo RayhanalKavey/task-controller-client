@@ -14,9 +14,9 @@ const MyTaskCard = ({
     userEmail,
   },
 }) => {
-  console.log(taskTitle);
+  // console.log(taskTitle);
   return (
-    <div className="w-[96%] mb-5 mx-auto bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
+    <div className="w-[96%] mb-5 mx-auto bg-white border border-gray-200 rounded-md shadow-md dark:bg-gray-800 dark:border-gray-700">
       <div className="flex justify-end px-4 pt-4">
         <button
           id="dropdownButton"
