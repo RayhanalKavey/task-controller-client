@@ -1,9 +1,7 @@
 import React from "react";
-import { BsThreeDots } from "react-icons/bs";
-import { TbEdit } from "react-icons/tb";
 import { RiDeleteBin6Line } from "react-icons/ri";
 
-const MyTaskCard = ({
+const CompletedTaskCard = ({
   task: {
     taskTitle,
     taskDetails,
@@ -15,11 +13,10 @@ const MyTaskCard = ({
     userEmail,
   },
 }) => {
-  // console.log(taskTitle);
   return (
     <div className="w-[96%] mb-5 mx-auto bg-white border border-gray-200 rounded-md shadow-md dark:bg-gray-800 dark:border-gray-700 mt-4">
       <div className="flex justify-end px-4 pt-4 gap-3 dark:text-white">
-        <TbEdit size={"1.8rem"} style={{ cursor: "pointer" }} />
+        {/* <TbEdit size={"1.8rem"} style={{ cursor: "pointer" }} /> */}
         <RiDeleteBin6Line size={"1.7rem"} style={{ cursor: "pointer" }} />
       </div>
       <div className="flex flex-col px-5  pb-5 mt-8">
@@ -31,7 +28,7 @@ const MyTaskCard = ({
         </p>
         <div className="flex flex-wrap self-end mt-4 space-x-3 md:mt-6 mr-5">
           <button className="text-black bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 shadow-lg shadow-teal-500/50 dark:shadow-lg dark:shadow-teal-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
-            Completed
+            Not Complete Yet!!
           </button>
         </div>
       </div>
@@ -39,4 +36,4 @@ const MyTaskCard = ({
   );
 };
 
-export default MyTaskCard;
+export default CompletedTaskCard;

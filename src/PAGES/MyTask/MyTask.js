@@ -19,7 +19,11 @@ const MyTask = () => {
     content = <p>Something went wrong</p>;
   }
   if (!loading && !error && data.length === 0) {
-    content = <p>Something went wrong</p>;
+    content = (
+      <p className="text-center mt-8 text-lg text-gray-900 dark:text-white">
+        No task to do?? Add some task!!
+      </p>
+    );
   }
   if (!loading && !error && data.length) {
     content = data?.map((task, i) => (
