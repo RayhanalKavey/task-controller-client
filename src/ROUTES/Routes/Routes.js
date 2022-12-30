@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import Main from "../../LAYOUT/Main/Main";
 import AddTask from "../../PAGES/AddTask/AddTask";
+import EditTask from "../../PAGES/AddTask/EditTask";
 import Login from "../../PAGES/Authentication/Login/Login";
 import Register from "../../PAGES/Authentication/Register/Register";
 import CompletedTask from "../../PAGES/CompletedTask/CompletedTask";
@@ -38,6 +39,14 @@ const router = createBrowserRouter([
           <PrivateRoute>
             {" "}
             <AddTask></AddTask>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/edit-task",
+        element: (
+          <PrivateRoute>
+            <EditTask></EditTask>{" "}
           </PrivateRoute>
         ),
       },

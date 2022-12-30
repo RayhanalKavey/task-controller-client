@@ -13,7 +13,7 @@ const MyTask = () => {
     state: { data, loading, error },
     setRefetching,
   } = useTask();
-
+  // console.log(error);
   // Handle make task as complete
   const handleCompleteTask = (task) => {
     fetch(`${process.env.REACT_APP_api_url}/tasks/${task?._id}`, {
@@ -43,6 +43,7 @@ const MyTask = () => {
 
   // Setup conditions for rendering the task accordingly
   let content;
+
   if (loading) {
     content = <TaskLoading />;
   }
@@ -74,6 +75,7 @@ const MyTask = () => {
       <h5 className="mb-5 text-center  py-8 text-xl font-medium text-teal-800 dark:text-white">
         My Tasks
       </h5>
+      {/* <TaskLoading></TaskLoading> */}
       {content}
     </div>
   );
