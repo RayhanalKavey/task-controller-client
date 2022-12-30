@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Button from "../../COMPONENTS/Button/Button";
 import useTitle from "../../HOOKS/useTitle/useTitle";
 import { useForm } from "react-hook-form";
