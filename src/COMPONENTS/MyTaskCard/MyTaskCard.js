@@ -13,7 +13,7 @@ const MyTaskCard = ({ task, handleCompleteTask, handleDeleteTask }) => {
   const handleToggle = () => {
     setToggleEdit(!toggleEdit);
   };
-  // console.log(task);
+
   //---------------///------------------//
   return (
     <div className="w-[96%] mb-5 mx-auto bg-white border border-gray-200 rounded-md shadow-md dark:bg-gray-800 dark:border-gray-700 mt-4">

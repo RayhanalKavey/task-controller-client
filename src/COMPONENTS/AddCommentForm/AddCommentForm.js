@@ -21,7 +21,7 @@ const AddCommentForm = ({ task }) => {
   } = useForm();
   const handleComment = (data) => {
     const { comment } = data;
-    console.log(comment);
+
     // const addComment = {
     //   taskID: task?._id,
     //   commentDetails: comment,
@@ -37,7 +37,6 @@ const AddCommentForm = ({ task }) => {
     })
       .then((res) => res.json())
       .then((result) => {
-        // console.log("result", result);
         setRefetching(true);
         toast.success(`Task is added.`);
         // //Navigate user to the desired path

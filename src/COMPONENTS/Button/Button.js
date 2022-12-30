@@ -1,9 +1,6 @@
 import React from "react";
 
 const Button = ({ children, CClass, clickHandler, Type }) => {
-  // console.log("clicked");
-  // console.log(CClass);
-  // console.log(clickHandler);
   return (
     <button
       onClick={clickHandler}

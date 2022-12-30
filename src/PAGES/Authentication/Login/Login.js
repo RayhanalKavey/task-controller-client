@@ -32,12 +32,12 @@ const Login = () => {
   const handleLogin = (data) => {
     setLoginError("");
     const { email, password } = data;
-    // console.log(data);
+
     ///Log In with email and password
     login(email, password)
       .then((result) => {
         const user = result.user;
-        console.log(user);
+
         //Navigate user to the desired path
         navigate(from, { replace: true });
 

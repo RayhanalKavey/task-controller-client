@@ -20,7 +20,6 @@ const AddTaskForm = () => {
   } = useForm();
 
   const handleTask = (data) => {
-    // console.log("click", data);
     const { taskTitle, description, photoURL } = data;
     // img: photoURL,
     const task = {
@@ -30,13 +29,12 @@ const AddTaskForm = () => {
       isComplete: false,
       userEmail: user?.email,
     };
-    // console.log("task", task);
+
     // postTaskForm(task);
     postTaskForm(task);
   };
 
   function postTaskForm(task) {
-    // console.log("task", task);
     // /// --2 save product information to the database
     fetch(`${process.env.REACT_APP_api_url}/tasks`, {
       method: "POST",
@@ -47,7 +45,6 @@ const AddTaskForm = () => {
     })
       .then((res) => res.json())
       .then((result) => {
-        // console.log("result", result);
         setRefetching(true);
         toast.success(`Task is added.`);
         reset();

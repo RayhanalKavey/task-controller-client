@@ -4,6 +4,7 @@ import { useTask } from "../../CONTEXT/TaskProvider/TaskProvider";
 import MyTaskCard from "../../COMPONENTS/MyTaskCard/MyTaskCard";
 import TaskLoading from "../../COMPONENTS/TaskLoading/TaskLoading";
 import toast from "react-hot-toast";
+import { useAuth } from "../../CONTEXT/AuthProvider/AuthProvider";
 
 const MyTask = () => {
   useTitle("My Task");
@@ -13,7 +14,10 @@ const MyTask = () => {
     state: { data, loading, error },
     setRefetching,
   } = useTask();
-  // console.log(error);
+
+  //User from auth provider
+  const { user } = useAuth();
+
   // Handle make task as complete
   const handleCompleteTask = (task) => {
     fetch(`${process.env.REACT_APP_api_url}/tasks/${task?._id}`, {
@@ -59,7 +63,9 @@ const MyTask = () => {
   }
   if (!loading && !error && data.length) {
     content = data
-      ?.filter((task) => task.isComplete !== true)
+      ?.filter(
+        (task) => task.isComplete !== true && user?.email === task.userEmail
+      )
       ?.map((task, i) => (
         <MyTaskCard
           key={task?._id}

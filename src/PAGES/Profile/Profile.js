@@ -27,7 +27,7 @@ const Profile = () => {
     const image = photoURL[0];
     const formData = new FormData();
     formData.append("image", image);
-    console.log("photoURL[0]", image);
+   
     /// send image to the dedicated image hosting server imgbb
     const url = `https://api.imgbb.com/1/upload?key=${imageHostKey}`;
     image !== undefined &&

@@ -66,7 +66,7 @@ const CompletedTask = () => {
   if (!loading && !error && data.length) {
     content = data
       ?.filter(
-        (task) => task.isComplete === true && user?.email === task.userEmail
+        (task) => task?.isComplete === true && user?.email === task?.userEmail
       )
       ?.map((task, i) => (
         <CompletedTaskCard
@@ -77,6 +77,7 @@ const CompletedTask = () => {
         ></CompletedTaskCard>
       ));
   }
+
   //---------------///------------------//
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-teal-700">
@@ -84,7 +85,7 @@ const CompletedTask = () => {
         Completed Tasks
       </h5>
       {content}
-      <DeleteModal></DeleteModal>
+      {/* <DeleteModal></DeleteModal> */}
     </div>
   );
 };

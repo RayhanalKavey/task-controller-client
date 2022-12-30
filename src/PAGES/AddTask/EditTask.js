@@ -10,8 +10,7 @@ import DeleteButton from "../../COMPONENTS/Button/DeleteButton";
 
 const EditTask = ({ task, handleToggle }) => {
   useTitle("Add Task");
-  const [photo, usePhoto] = useState("");
-  // console.log(task);
+  const [photoo, usePhotoo] = useState("");
 
   const { setRefetching } = useTask();
   const { user } = useAuth();
@@ -28,8 +27,6 @@ const EditTask = ({ task, handleToggle }) => {
 
   //image bb image hosting key
   const imageHostKey = process.env.REACT_APP_imagebb_key;
-
-  // console.log(user?.email);
 
   ///--------------------------------------
   const handleTask = (data) => {
@@ -59,7 +56,7 @@ const EditTask = ({ task, handleToggle }) => {
         .then((imgData) => {
           if (imgData.success) {
             const photoURL = imgData.data.url;
-            // usePhoto(photoURL);
+            // usePhotoo(photoURL);
             ///// add to media
           }
         });
@@ -68,8 +65,6 @@ const EditTask = ({ task, handleToggle }) => {
   };
 
   function postTaskForm(taskValue) {
-    console.log(task);
-    // console.log("task", task);
     // /// --2 save product information to the database
     fetch(`${process.env.REACT_APP_api_url}/tasks-edit/${task?._id}`, {
       method: "PUT",
@@ -80,7 +75,6 @@ const EditTask = ({ task, handleToggle }) => {
     })
       .then((res) => res.json())
       .then((result) => {
-        // console.log("result", result);
         setRefetching(true);
         toast.success(`Task edited successfully.`);
         reset();
@@ -148,7 +142,7 @@ const EditTask = ({ task, handleToggle }) => {
           )}
         </div>
         {/*/// Photo URL */}
-        <div>
+        {/* <div>
           <label className="block mb-2 text-sm font-medium text-teal-800 dark:text-white">
             Image
           </label>
@@ -160,11 +154,10 @@ const EditTask = ({ task, handleToggle }) => {
             accept="image/*"
           />
 
-          {/* erroR message */}
           {errors.photoURL && (
             <p className="text-rose-500 mt-1"> {errors.photoURL?.message}</p>
           )}
-        </div>
+        </div> */}
         <div className="flex flex-warp justify-start ">
           <Button Type="submit" CclassName="">
             Edit

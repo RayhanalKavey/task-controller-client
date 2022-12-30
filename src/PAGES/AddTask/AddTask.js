@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../../COMPONENTS/Button/Button";
 import useTitle from "../../HOOKS/useTitle/useTitle";
@@ -6,9 +6,18 @@ import { useForm } from "react-hook-form";
 import { useAuth } from "../../CONTEXT/AuthProvider/AuthProvider";
 import toast from "react-hot-toast";
 import { useTask } from "../../CONTEXT/TaskProvider/TaskProvider";
+import DeleteButton from "../../COMPONENTS/Button/DeleteButton";
 
 const AddTask = () => {
   useTitle("Add Task");
+  // const [imgU, setImgU] = useState("");
+  const [toggle, setToggle] = useState(false);
+
+  //handle toggle
+  const handleToggle = () => {
+    setToggle(!toggle);
+  };
+
   const { setRefetching } = useTask();
   const { user } = useAuth();
   //------------- redirect user
@@ -25,8 +34,6 @@ const AddTask = () => {
   //image bb image hosting key
   const imageHostKey = process.env.REACT_APP_imagebb_key;
 
-  // console.log(user?.email);
-
   ///--------------------------------------
   const handleTask = (data) => {
     const { taskTitle, description, photoURL } = data;
@@ -38,12 +45,16 @@ const AddTask = () => {
       isComplete: false,
       userEmail: user?.email,
     };
+
+    toggle || postTaskForm(task);
+    toggle && updatePhoto(photoURL, task);
+  };
+
+  function updatePhoto(photoURL, task) {
     const image = photoURL[0];
     const formData = new FormData();
     formData.append("image", image);
-    // console.log("data", data);
-    // console.log("photoURL", photoURL);
-    // console.log("photoURL[0]", image);
+
     /// send image to the dedicated image hosting server imgbb
     const url = `https://api.imgbb.com/1/upload?key=${imageHostKey}`;
     image !== undefined &&
@@ -55,16 +66,15 @@ const AddTask = () => {
         .then((imgData) => {
           if (imgData.success) {
             const photoURL = imgData.data.url;
+            task.img = photoURL;
 
+            postTaskForm(task);
             ///// add to media
           }
         });
-
-    postTaskForm(task);
-  };
+  }
 
   function postTaskForm(task) {
-    // console.log("task", task);
     // /// --2 save product information to the database
     fetch(`${process.env.REACT_APP_api_url}/tasks`, {
       method: "POST",
@@ -75,7 +85,6 @@ const AddTask = () => {
     })
       .then((res) => res.json())
       .then((result) => {
-        // console.log("result", result);
         setRefetching(true);
         toast.success(`Task is added.`);
         reset();
@@ -83,6 +92,28 @@ const AddTask = () => {
         navigate("/my-task");
       });
   }
+  // const formWithImage = (data) => {
+  //   const { photoURL } = data;
+  //   const image = photoURL[0];
+  //   const formData = new FormData();
+  //   formData.append("image", image);
+  //
+  //   /// send image to the dedicated image hosting server imgbb
+  //   const url = `https://api.imgbb.com/1/upload?key=${imageHostKey}`;
+  //   image !== undefined &&
+  //     fetch(url, {
+  //       method: "POST",
+  //       body: formData,
+  //     })
+  //       .then((res) => res.json())
+  //       .then((imgData) => {
+  //         if (imgData.success) {
+  //           const photoURL = imgData.data.url;
+
+  //           ///// add to media
+  //         }
+  //       });
+  // };
 
   return (
     <div className="h-screen bg-gray-50 dark:bg-teal-700">
@@ -140,24 +171,27 @@ const AddTask = () => {
             <p className="text-rose-500 mt-1"> {errors.description?.message}</p>
           )}
         </div>
-        {/*/// Photo URL */}
-        <div>
-          <label className="block mb-2 text-sm font-medium text-teal-800 dark:text-white">
-            Image
-          </label>
-          <input
-            type="file"
-            {...register("photoURL", { required: "Image is required !" })}
-            className=" block w-full text-sm text-gray-800 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-teal-600 dark:placeholder-gray-400"
-            placeholder="your image"
-            accept="image/*"
-          />
+        {/*/// photoURL */}
+        {toggle && (
+          <div>
+            <label className="block mb-2 text-sm font-medium text-teal-800 dark:text-white">
+              Image
+            </label>
+            <input
+              type="file"
+              {...register("photoURL", { required: "Image is required !" })}
+              className=" block w-full text-sm text-gray-800 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-teal-600 dark:placeholder-gray-400"
+              placeholder="your image"
+              accept="image/*"
+            />
 
-          {/* erroR message */}
-          {errors.photoURL && (
-            <p className="text-rose-500 mt-1"> {errors.photoURL?.message}</p>
-          )}
-        </div>
+            {/* erroR message */}
+            {errors.photoURL && (
+              <p className="text-rose-500 mt-1"> {errors.photoURL?.message}</p>
+            )}
+          </div>
+        )}
+        {/* /// */}
         <div className="flex justify-start ">
           <Button Type="submit" CclassName="">
             Add
@@ -165,6 +199,35 @@ const AddTask = () => {
           </Button>
         </div>
       </form>
+      <div>
+        <Button clickHandler={handleToggle}>
+          Add Image
+          <span className="sr-only">Send message</span>
+        </Button>
+
+        {toggle && (
+          <DeleteButton clickHandler={handleToggle}>
+            Cancel
+            <span className="sr-only">Send message</span>
+          </DeleteButton>
+        )}
+        {/*/// Photo URL */}
+        {/* {toggle && (
+          <form
+            className="flex flex-col w-[96%] p-5 gap-8 mb-5 mx-auto bg-white border border-gray-200 rounded-md shadow-md dark:bg-gray-800 dark:border-gray-700 mt-4"
+            // className="flex gap-8 flex-col w-[98%] mx-auto"
+            onSubmit={handleSubmit(formWithImage)}
+          >
+           
+            <div className="flex justify-start ">
+              <Button Type="submit" CclassName="">
+                Submit
+                <span className="sr-only">Send message</span>
+              </Button>
+            </div>
+          </form>
+        )} */}
+      </div>
     </div>
   );
 };
