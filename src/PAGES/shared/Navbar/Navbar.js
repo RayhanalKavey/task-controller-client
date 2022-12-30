@@ -11,10 +11,12 @@ import toast from "react-hot-toast";
 const Navbar = () => {
   // Create a hook of THEME_CONTEXT in the ThemeProvider to use theme
   const { theme, setTheme } = useTheme();
+
   // Theme Switch handler
   const handleThemeSwitch = () => {
     setTheme(theme === "dark" ? "light" : "dark");
   };
+  //User information from auth context
   const { logout, setUser, user } = useAuth();
 
   /// Handle log out
@@ -45,7 +47,7 @@ const Navbar = () => {
           </li>
           <Link to={"/profile"}>
             {user?.photoURL ? (
-              <li className="mr-1 sm:mr-5">
+              <li className="mr-1 sm:mr-5  ">
                 <img
                   className="block w-10 h-10 rounded-full py-2 pl-3  text-gray-700  hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-teal-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
                   src={user?.photoURL}
@@ -120,7 +122,28 @@ const Navbar = () => {
                 className="block py-2 text-2xl pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-600 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
                 onClick={handleThemeSwitch}
               >
-                {theme === "dark" ? <RxSun /> : <HiMoon />}
+                {theme === "dark" ? (
+                  <RxSun
+                    size={"1.8rem"}
+                    color="teal"
+                    style={{
+                      border: "1px solid white",
+                      borderRadius: "50%",
+                      padding: ".3rem",
+                      color: "white",
+                    }}
+                  />
+                ) : (
+                  <HiMoon
+                    size={"1.8rem"}
+                    color="teal"
+                    style={{
+                      border: "1px solid teal",
+                      borderRadius: "50%",
+                      padding: ".1rem",
+                    }}
+                  />
+                )}
               </Link>
             </li>
 

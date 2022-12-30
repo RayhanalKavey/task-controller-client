@@ -29,18 +29,16 @@ const Register = () => {
   //image bb image hosting key
   const imageHostKey = process.env.REACT_APP_imagebb_key;
 
-  //handle register
+  ///handle register
   const handleRegister = (data) => {
-    const { name, email, password, photoURL, accountType } = data;
+    const { name, email, password, photoURL } = data;
     setSignUpError("");
     handleCreateUser(email, password);
     const image = photoURL[0];
     const formData = new FormData();
     formData.append("image", image);
-    // console.log("data", data);
-    // console.log("photoURL", photoURL);
-    console.log("photoURL[0]", image);
-    /// send image to the dedicated image hosting server imgbb
+
+    // send image to the dedicated image hosting server imgbb
     const url = `https://api.imgbb.com/1/upload?key=${imageHostKey}`;
     image !== undefined &&
       fetch(url, {
@@ -53,7 +51,6 @@ const Register = () => {
             const photoURL = imgData.data.url;
 
             handleUpdateUserProfile(name, photoURL);
-            // //Create user with email and password enD
           }
         })
         .catch((error) => {
@@ -61,8 +58,8 @@ const Register = () => {
         });
   };
 
+  /// Create user with email and password
   const handleCreateUser = (email, password) => {
-    ///Create user with email and password starT
     createUser(email, password)
       .then((result) => {
         const user = result.user;
@@ -112,9 +109,7 @@ const Register = () => {
       });
   };
 
-  ///---------------------------
-  console.log("errors", errors);
-  //-------------------------------///---------------------------------------///
+  //-------------------------------///---------------------------------------//
   return (
     <section className="bg-gray-50 dark:bg-teal-500">
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">

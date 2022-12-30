@@ -8,18 +8,19 @@ import toast from "react-hot-toast";
 
 const CompletedTask = () => {
   useTitle("Completed Task");
+
+  //User from auth provider
   const { user } = useAuth();
+
+  // Task data from context
   const {
     state: { data, loading, error },
     setRefetching,
   } = useTask();
-  // console.log(data);
 
-  ///handle Advertisement --1
+  /// Make task as not complete yet
   const handleNotCompleteTask = (task) => {
-    // console.log("click");
-    // console.log("task", task?._id);
-    fetch(`${process.env.REACT_APP_api_url}/tasks/${task?._id}`, {
+    fetch(`${process.env.REACT_APP_api_url}/tasks/not-complete/${task?._id}`, {
       method: "PUT",
     })
       .then((res) => res.json())
@@ -27,14 +28,12 @@ const CompletedTask = () => {
         if (data.modifiedCount > 0) {
           toast.success(`Done with task ${task?.taskTitle}!`);
           setRefetching(true);
-          // console.log("task", task?.isComplete);
         }
       });
   };
 
+  // Delete task handler
   const handleDeleteTask = (task) => {
-    console.log("task", task?._id);
-
     fetch(`${process.env.REACT_APP_api_url}/tasks/${task?._id}`, {
       method: "DELETE",
     })
@@ -47,6 +46,7 @@ const CompletedTask = () => {
       });
   };
 
+  // Setup conditions for rendering the task accordingly
   let content;
   if (loading) {
     content = <TaskLoading />;
@@ -61,6 +61,7 @@ const CompletedTask = () => {
       </p>
     );
   }
+  // If the task has logged in users email and  it's  isComplete value is true.
   if (!loading && !error && data.length) {
     content = data
       ?.filter(
@@ -75,8 +76,9 @@ const CompletedTask = () => {
         ></CompletedTaskCard>
       ));
   }
+  //---------------///------------------//
   return (
-    <div className="h-scree bg-gray-50 dark:bg-teal-700">
+    <div className="min-h-screen bg-gray-50 dark:bg-teal-700">
       <h5 className="mb-5 text-center  pt-8 text-xl font-medium text-teal-800 dark:text-white">
         Completed Tasks
       </h5>

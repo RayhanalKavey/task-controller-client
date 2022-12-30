@@ -1,27 +1,12 @@
 import React from "react";
-import { BsThreeDots } from "react-icons/bs";
 import { TbEdit } from "react-icons/tb";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import TextPhotoForm from "../TextPhotoForm/TextPhotoForm";
 import Button from "../Button/Button";
 import DeleteButton from "../Button/DeleteButton";
 
-const MyTaskCard = ({
-  task: {
-    taskTitle,
-    taskDetails,
-    img,
-    task_id,
-    isComplete,
-    photoText,
-    taskComment,
-    userEmail,
-  },
-  task,
-  handleCompleteTask,
-  handleDeleteTask,
-}) => {
-  // console.log(taskTitle);
+const MyTaskCard = ({ task, handleCompleteTask, handleDeleteTask }) => {
+  const { taskTitle, taskDetails } = task;
+  //---------------///------------------//
   return (
     <div className="w-[96%] mb-5 mx-auto bg-white border border-gray-200 rounded-md shadow-md dark:bg-gray-800 dark:border-gray-700 mt-4">
       <div className="flex justify-end px-4 pt-4 gap-3 dark:text-white"></div>
@@ -41,6 +26,7 @@ const MyTaskCard = ({
             {" "}
             <TbEdit size={"1rem"} />
           </Button>
+
           <DeleteButton
             clickHandler={() => handleDeleteTask(task)}
             CClass="bg-pink-500"

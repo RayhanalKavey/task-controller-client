@@ -7,16 +7,15 @@ import toast from "react-hot-toast";
 
 const MyTask = () => {
   useTitle("My Task");
-  //nested destructuring
+
+  // Get task data from task context
   const {
     state: { data, loading, error },
     setRefetching,
   } = useTask();
-  // console.log(data);
 
-  //handle Advertisement --2
+  // Handle make task as complete
   const handleCompleteTask = (task) => {
-    // console.log("task", task?._id);
     fetch(`${process.env.REACT_APP_api_url}/tasks/${task?._id}`, {
       method: "PUT",
     })
@@ -25,11 +24,10 @@ const MyTask = () => {
         if (data.modifiedCount > 0) {
           toast.success(`Done with task ${task?.taskTitle}!`);
           setRefetching(true);
-          // console.log("task", task?.isComplete);
         }
       });
   };
-  // delete task --2
+  // Delete task handler
   const handleDeleteTask = (task) => {
     console.log("task", task?._id);
 
@@ -44,6 +42,8 @@ const MyTask = () => {
         }
       });
   };
+
+  // Setup conditions for rendering the task accordingly
   let content;
   if (loading) {
     content = <TaskLoading />;
@@ -72,7 +72,7 @@ const MyTask = () => {
   }
 
   return (
-    <div className="h-screen bg-gray-50 dark:bg-teal-700">
+    <div className=" min-h-screen bg-gray-50 dark:bg-teal-700">
       <h5 className="mb-5 text-center  py-8 text-xl font-medium text-teal-800 dark:text-white">
         My Tasks
       </h5>
