@@ -29,8 +29,6 @@ const MyTask = () => {
   };
   // Delete task handler
   const handleDeleteTask = (task) => {
-    console.log("task", task?._id);
-
     fetch(`${process.env.REACT_APP_api_url}/tasks/${task?._id}`, {
       method: "DELETE",
     })

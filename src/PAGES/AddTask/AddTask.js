@@ -18,6 +18,7 @@ const AddTask = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
 
@@ -77,6 +78,7 @@ const AddTask = () => {
         // console.log("result", result);
         setRefetching(true);
         toast.success(`Task is added.`);
+        reset();
         // //Navigate user to the desired path
         navigate("/my-task");
       });

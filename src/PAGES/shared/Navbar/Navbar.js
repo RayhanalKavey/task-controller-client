@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { IoIosMenu, IoIosClose } from "react-icons/io";
 import { FaUser } from "react-icons/fa";
 import { HiMoon } from "react-icons/hi";
@@ -7,10 +7,19 @@ import { Link, NavLink } from "react-router-dom";
 import { useTheme } from "../../../CONTEXT/ThemeProvider/ThemeProvider";
 import { useAuth } from "../../../CONTEXT/AuthProvider/AuthProvider";
 import toast from "react-hot-toast";
+import AddTaskForm from "../../../COMPONENTS/AddTaskForm/AddTaskForm";
+import { IoMdAdd } from "react-icons/io";
+import { AiOutlineMinus } from "react-icons/ai";
 
 const Navbar = () => {
   // Create a hook of THEME_CONTEXT in the ThemeProvider to use theme
   const { theme, setTheme } = useTheme();
+  const [toggle, setToggle] = useState(false);
+
+  //handle toggle
+  const handleToggle = () => {
+    setToggle(!toggle);
+  };
 
   // Theme Switch handler
   const handleThemeSwitch = () => {
@@ -86,7 +95,7 @@ const Navbar = () => {
   );
 
   return (
-    <nav className="bg-white  border-gray-200 px-2 sm:px-4 py-2.5 shadow dark:bg-teal-800">
+    <nav className="bg-white flex flex-col border-gray-200 px-2 sm:px-4 py-2.5 shadow dark:bg-teal-800">
       <div className="container flex flex-wrap items-center justify-between  mx-auto">
         <Link to={"/"} className="flex items-center">
           {/* <img
@@ -102,7 +111,7 @@ const Navbar = () => {
         <button
           data-collapse-toggle="navbar-default"
           type="button"
-          className="inline-flex items-center p-2 ml-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+          className="inline-flex items-center  p-2 ml-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
           aria-controls="navbar-default"
           aria-expanded="false"
         >
@@ -116,10 +125,10 @@ const Navbar = () => {
           {/* <IoIosClose size="1.8rem" /> */}
         </button>
         <div className="hidden w-full md:block md:w-auto" id="navbar-default">
-          <ul className="flex items-center flex-col p-4 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-teal-800 dark:border-gray-700">
+          <ul className="flex items-center text-center flex-col p-4 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-teal-800 dark:border-gray-700">
             <li>
               <Link
-                className="block py-2 text-2xl pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-600 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                className="block text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-600 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
                 onClick={handleThemeSwitch}
               >
                 {theme === "dark" ? (
@@ -150,7 +159,7 @@ const Navbar = () => {
             <li>
               <NavLink
                 to={"/my-task"}
-                className="block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-teal-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                className="block py-2  pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-teal-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
               >
                 My Task
               </NavLink>
@@ -171,11 +180,51 @@ const Navbar = () => {
                 Completed Task
               </NavLink>
             </li>
+            <li>
+              <NavLink
+                to={"/media"}
+                className="block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-teal-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+              >
+                All Media
+              </NavLink>
+            </li>
 
             {logInOut}
           </ul>
         </div>
       </div>
+      <Link
+        className="block text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-600 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+        onClick={() => handleToggle()}
+      >
+        {toggle ? (
+          <AiOutlineMinus
+            size={"1.8rem"}
+            color=" teal"
+            style={{
+              border: "1px solid teal",
+              borderRadius: "50%",
+              padding: ".1rem",
+            }}
+          />
+        ) : (
+          <IoMdAdd
+            size={"1.8rem"}
+            color="teal"
+            style={{
+              border: "1px solid teal",
+              borderRadius: "50%",
+              padding: ".1rem",
+            }}
+          />
+        )}{" "}
+      </Link>
+      {toggle && (
+        <div className="self-stretch flex items-center">
+          <h1>Add Task</h1>
+          <AddTaskForm></AddTaskForm>
+        </div>
+      )}
     </nav>
   );
 };

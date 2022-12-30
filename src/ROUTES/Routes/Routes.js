@@ -4,6 +4,7 @@ import AddTask from "../../PAGES/AddTask/AddTask";
 import Login from "../../PAGES/Authentication/Login/Login";
 import Register from "../../PAGES/Authentication/Register/Register";
 import CompletedTask from "../../PAGES/CompletedTask/CompletedTask";
+import Media from "../../PAGES/Media/Media";
 import MyTask from "../../PAGES/MyTask/MyTask";
 import Profile from "../../PAGES/Profile/Profile";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
@@ -55,6 +56,10 @@ const router = createBrowserRouter([
       {
         path: "/register",
         element: <Register></Register>,
+      },
+      {
+        path: "/media",
+        element: <Media></Media>,
       },
       {
         path: "/profile",
