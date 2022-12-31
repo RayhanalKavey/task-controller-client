@@ -39,27 +39,27 @@ const EditTask = ({ task, handleToggle }) => {
       // isComplete: false,
       // userEmail: user?.email,
     };
-    const image = photoURL[0];
-    const formData = new FormData();
-    formData.append("image", image);
-    // console.log("data", data);
-    // console.log("photoURL", photoURL);
-    // console.log("photoURL[0]", image);
-    /// send image to the dedicated image hosting server imgbb
-    const url = `https://api.imgbb.com/1/upload?key=${imageHostKey}`;
-    image !== undefined &&
-      fetch(url, {
-        method: "POST",
-        body: formData,
-      })
-        .then((res) => res.json())
-        .then((imgData) => {
-          if (imgData.success) {
-            const photoURL = imgData.data.url;
-            // usePhotoo(photoURL);
-            ///// add to media
-          }
-        });
+    // const image = photoURL[0];
+    // const formData = new FormData();
+    // formData.append("image", image);
+    // // console.log("data", data);
+    // // console.log("photoURL", photoURL);
+    // // console.log("photoURL[0]", image);
+    // /// send image to the dedicated image hosting server imgbb
+    // const url = `https://api.imgbb.com/1/upload?key=${imageHostKey}`;
+    // image !== undefined &&
+    //   fetch(url, {
+    //     method: "POST",
+    //     body: formData,
+    //   })
+    //     .then((res) => res.json())
+    //     .then((imgData) => {
+    //       if (imgData.success) {
+    //         const photoURL = imgData.data.url;
+    //         // usePhotoo(photoURL);
+    //         ///// add to media
+    //       }
+    //     });
 
     postTaskForm(taskValue);
   };

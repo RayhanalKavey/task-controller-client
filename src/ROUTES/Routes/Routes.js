@@ -5,6 +5,7 @@ import EditTask from "../../PAGES/AddTask/EditTask";
 import Login from "../../PAGES/Authentication/Login/Login";
 import Register from "../../PAGES/Authentication/Register/Register";
 import CompletedTask from "../../PAGES/CompletedTask/CompletedTask";
+import Home from "../../PAGES/home/Home/Home";
 import Media from "../../PAGES/Media/Media";
 import MyTask from "../../PAGES/MyTask/MyTask";
 import Profile from "../../PAGES/Profile/Profile";
@@ -17,12 +18,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: (
-          <PrivateRoute>
-            {" "}
-            <MyTask></MyTask>
-          </PrivateRoute>
-        ),
+        element: <Home></Home>,
       },
       {
         path: "/my-task",
