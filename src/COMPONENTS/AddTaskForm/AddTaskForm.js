@@ -5,8 +5,9 @@ import { useAuth } from "../../CONTEXT/AuthProvider/AuthProvider";
 import { useTask } from "../../CONTEXT/TaskProvider/TaskProvider";
 import Button from "../Button/Button";
 import toast from "react-hot-toast";
+import DeleteButton from "../Button/DeleteButton";
 
-const AddTaskForm = () => {
+const AddTaskForm = ({ handleToggle }) => {
   const { setRefetching } = useTask();
   const { user } = useAuth();
   //------------- redirect user
@@ -54,7 +55,7 @@ const AddTaskForm = () => {
   }
   return (
     <form
-      className="flex flex-row w-[96%] p-5 gap-8 mb-5 mx-auto bg-white border border-gray-200 rounded-md shadow-md dark:bg-gray-800 dark:border-gray-700 mt-4"
+      className="absolute top-12  flex flex-col w-fit p-5 gap-8 mb-5 mx-auto bg-white border border-gray-200 rounded-md shadow-2xl dark:bg-gray-800 dark:border-gray-700 mt-4"
       // className="flex gap-8 flex-col w-[98%] mx-auto"
       onSubmit={handleSubmit(handleTask)}
     >
@@ -73,19 +74,13 @@ const AddTaskForm = () => {
           {...register("taskTitle", {
             required: "Task description is required !",
           })}
-          className="block h-10 p-2.5 w-full text-sm text-teal-800 bg-gray-50 rounded-lg border border-gray-300 focus:ring-teal-500 focus:border-teal-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-teal-500 dark:focus:border-teal-500"
+          className="block h-12 p-2.5 w-full text-sm text-teal-800 bg-gray-50 rounded-lg border border-gray-300 focus:ring-teal-500 focus:border-teal-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-teal-500 dark:focus:border-teal-500"
           placeholder="Add title..."
         ></textarea>
         {/* erroR message */}
         {errors?.taskTitle && (
           <p className="text-rose-500 mt-1"> {errors.taskTitle?.message}</p>
         )}
-        <div className="flex justify-start mt-2">
-          <Button Type="submit" CclassName="">
-            Add
-            <span className="sr-only">Send message</span>
-          </Button>
-        </div>
       </div>
       {/*/// task */}
       <div className="w-full">
@@ -102,13 +97,20 @@ const AddTaskForm = () => {
           {...register("description", {
             required: "Task description is required !",
           })}
-          className="block p-2.5 h-20 w-full text-sm text-teal-800 bg-gray-50 rounded-lg border border-gray-300 focus:ring-teal-500 focus:border-teal-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-teal-500 dark:focus:border-teal-500"
+          className="block p-2.5 h-12 w-full text-sm text-teal-800 bg-gray-50 rounded-lg border border-gray-300 focus:ring-teal-500 focus:border-teal-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-teal-500 dark:focus:border-teal-500"
           placeholder="Add task description..."
         ></textarea>
         {/* erroR message */}
         {errors?.description && (
           <p className="text-rose-500 mt-1"> {errors.description?.message}</p>
         )}
+      </div>
+      <div className="flex justify-start mt-2">
+        <Button Type="submit" CclassName="">
+          Add Task
+          <span className="sr-only">Send message</span>
+        </Button>
+        <DeleteButton clickHandler={handleToggle}>Cancel</DeleteButton>
       </div>
     </form>
   );

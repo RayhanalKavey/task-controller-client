@@ -94,7 +94,7 @@ const AddTask = () => {
   }
 
   return (
-    <div className="h-screen bg-gray-50 dark:bg-teal-700">
+    <div className="min-h-screen bg-gray-50 dark:bg-teal-700">
       <h5 className="mb-5 text-center  pt-8 text-xl font-medium text-teal-800 dark:text-white">
         Add Task
       </h5>

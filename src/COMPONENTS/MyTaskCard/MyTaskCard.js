@@ -3,7 +3,6 @@ import { TbEdit } from "react-icons/tb";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import Button from "../Button/Button";
 import DeleteButton from "../Button/DeleteButton";
-import { Link } from "react-router-dom";
 import EditTask from "../../PAGES/AddTask/EditTask";
 
 const MyTaskCard = ({ task, handleCompleteTask, handleDeleteTask }) => {
@@ -16,7 +15,7 @@ const MyTaskCard = ({ task, handleCompleteTask, handleDeleteTask }) => {
 
   //---------------///------------------//
   return (
-    <div className="w-[96%] mb-5 mx-auto bg-white border border-gray-200 rounded-md shadow-md dark:bg-gray-800 dark:border-gray-700 mt-4">
+    <div className="w-[96%]  mx-auto bg-white border border-gray-200 rounded-md shadow-md dark:bg-gray-800 dark:border-gray-700 mt-4">
       <div className="flex justify-end px-4 pt-4 gap-3 dark:text-white"></div>
       <div className="flex flex-col px-5  pb-5 mt-3">
         <h5 className="mb-1 text-xl font-medium text-teal-800 dark:text-white">

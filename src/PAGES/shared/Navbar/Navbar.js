@@ -95,18 +95,76 @@ const Navbar = () => {
   );
 
   return (
-    <nav className="bg-white flex flex-col border-gray-200 px-2 sm:px-4 py-2.5 shadow dark:bg-teal-800">
-      <div className="container flex flex-wrap items-center justify-between  mx-auto">
-        <Link to={"/"} className="flex items-center">
-          {/* <img
+    <nav className="relative  bg-teal-100 flex flex-col border-gray-200 px-2 sm:px-4 py-2.5 shadow dark:bg-teal-800">
+      <div className="container flex flex-wrap gap-4 items-center justify-between  mx-auto">
+        <ul className="flex items-center gap-3 py-2">
+          <li>
+            {" "}
+            <Link to={"/"} className="flex  items-center">
+              {/* <img
             src=""
             className="h-6 mr-3 sm:h-9"
             alt="logo"
           /> */}
-          <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
-            Task Controller
-          </span>
-        </Link>
+              <span className="self-center text-xl font-semibold whitespace-nowrap text-teal-800 dark:text-white">
+                Task Controller
+              </span>
+            </Link>
+          </li>
+          <li>
+            <Link
+              className="  border dark:border-teal-50 border-teal-700 block text-teal-700 rounded-full  hover:bg-gray-100 md:hover:bg-transparent  md:hover:text-gray-600 md:p-0 dark:text-white md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+              onClick={() => handleToggle()}
+            >
+              {toggle ? (
+                <AiOutlineMinus
+                  size={"1.6rem"}
+                  style={{
+                    borderRadius: "50%",
+                    padding: ".1rem",
+                  }}
+                />
+              ) : (
+                <IoMdAdd
+                  size={"1.6rem"}
+                  style={{
+                    borderRadius: "50%",
+                    padding: ".1rem",
+                  }}
+                />
+              )}{" "}
+            </Link>
+          </li>
+          <li>
+            <Link
+              className="block text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-600 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+              onClick={handleThemeSwitch}
+            >
+              {theme === "dark" ? (
+                <RxSun
+                  size={"1.6rem"}
+                  color="teal"
+                  style={{
+                    border: "1px solid white",
+                    borderRadius: "50%",
+                    padding: ".3rem",
+                    color: "white",
+                  }}
+                />
+              ) : (
+                <HiMoon
+                  size={"1.6rem"}
+                  color="teal"
+                  style={{
+                    border: "1px solid teal",
+                    borderRadius: "50%",
+                    padding: ".1rem",
+                  }}
+                />
+              )}
+            </Link>
+          </li>
+        </ul>
 
         <button
           data-collapse-toggle="navbar-default"
@@ -125,37 +183,7 @@ const Navbar = () => {
           {/* <IoIosClose size="1.8rem" /> */}
         </button>
         <div className="hidden w-full md:block md:w-auto" id="navbar-default">
-          <ul className="flex items-center text-center flex-col p-4 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-teal-800 dark:border-gray-700">
-            <li>
-              <Link
-                className="block text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-600 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-                onClick={handleThemeSwitch}
-              >
-                {theme === "dark" ? (
-                  <RxSun
-                    size={"1.8rem"}
-                    color="teal"
-                    style={{
-                      border: "1px solid white",
-                      borderRadius: "50%",
-                      padding: ".3rem",
-                      color: "white",
-                    }}
-                  />
-                ) : (
-                  <HiMoon
-                    size={"1.8rem"}
-                    color="teal"
-                    style={{
-                      border: "1px solid teal",
-                      borderRadius: "50%",
-                      padding: ".1rem",
-                    }}
-                  />
-                )}
-              </Link>
-            </li>
-
+          <ul className=" shadow-lg flex items-center text-center flex-col p-4 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-teal-700 dark:border-gray-700">
             <li>
               <NavLink
                 to={"/"}
@@ -164,6 +192,7 @@ const Navbar = () => {
                 Home
               </NavLink>
             </li>
+
             <li>
               <NavLink
                 to={"/my-task"}
@@ -201,36 +230,10 @@ const Navbar = () => {
           </ul>
         </div>
       </div>
-      <Link
-        className="block text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-gray-600 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-        onClick={() => handleToggle()}
-      >
-        {toggle ? (
-          <AiOutlineMinus
-            size={"1.8rem"}
-            color=" teal"
-            style={{
-              border: "1px solid teal",
-              borderRadius: "50%",
-              padding: ".1rem",
-            }}
-          />
-        ) : (
-          <IoMdAdd
-            size={"1.8rem"}
-            color="teal"
-            style={{
-              border: "1px solid teal",
-              borderRadius: "50%",
-              padding: ".1rem",
-            }}
-          />
-        )}{" "}
-      </Link>
+
       {toggle && (
         <div className="self-stretch flex items-center">
-          <h1>Add Task</h1>
-          <AddTaskForm></AddTaskForm>
+          <AddTaskForm handleToggle={handleToggle}></AddTaskForm>
         </div>
       )}
     </nav>

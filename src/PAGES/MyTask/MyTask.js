@@ -52,13 +52,26 @@ const MyTask = () => {
     content = <TaskLoading />;
   }
   if (error) {
-    content = <p>Something went wrong</p>;
+    content = (
+      <div className="min-h-screen ">
+        <div className="text-3xl text-center mt-8 text-red-500  flex flex-col gap-2 justify-start mx-auto p-3 rounded-lg shadow-lg border  border-red-500 w-fit">
+          <h3 className="font-bold ">
+            {" "}
+            Something went wrong with the server!!
+          </h3>
+          <p>Check your internet connection !!</p>
+          <p>It might be something else !!</p>
+        </div>
+      </div>
+    );
   }
   if (!loading && !error && data.length === 0) {
     content = (
-      <p className="text-center mt-8 text-lg text-teal-800 dark:text-white">
-        No task to do?? Add some task!!
-      </p>
+      <div className="min-h-screen">
+        <div className="text-3xl text-center mt-8 text-teal-500 dark:text-gray-300  flex flex-col gap-2 justify-start mx-auto p-3 rounded-lg shadow-lg border  border-red-500 w-fit">
+          No task to do?? Add some task!!
+        </div>
+      </div>
     );
   }
   if (!loading && !error && data.length) {
@@ -77,8 +90,8 @@ const MyTask = () => {
   }
 
   return (
-    <div className=" min-h-screen bg-gray-50 dark:bg-teal-700">
-      <h5 className="mb-5 text-center  py-8 text-xl font-medium text-teal-800 dark:text-white">
+    <div className=" min-h-screen bg-gray-50 dark:bg-teal-700 pb-10">
+      <h5 className="pb-5 text-center  pt-8 text-xl font-medium text-teal-800 dark:text-white">
         My Tasks
       </h5>
       {/* <TaskLoading></TaskLoading> */}
