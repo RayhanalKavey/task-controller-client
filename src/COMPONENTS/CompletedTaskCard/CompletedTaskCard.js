@@ -4,12 +4,15 @@ import AddCommentForm from "../AddCommentForm/AddCommentForm";
 import Button from "../Button/Button";
 import DeleteButton from "../Button/DeleteButton";
 import EditComment from "../EditComment/EditComment";
+import { useTask } from "../../CONTEXT/TaskProvider/TaskProvider";
+import toast from "react-hot-toast";
 
 const CompletedTaskCard = ({
   task,
   handleNotCompleteTask,
   handleDeleteTask,
 }) => {
+  const { setRefetching } = useTask();
   const { taskTitle, taskDetails, taskComment } = task;
   const [toggleAdd, setToggleAdd] = useState(false);
   const [toggleEdit, setToggleEdit] = useState(false);
@@ -20,6 +23,23 @@ const CompletedTaskCard = ({
   //handle toggle Edit
   const handleToggleEdit = () => {
     setToggleEdit(!toggleEdit);
+  };
+  const handleCommentDelete = () => {
+    // console.log("clicked", task?._id);
+    fetch(
+      `${process.env.REACT_APP_api_url}/tasks/comments/remove-comment/${task?._id}`,
+      {
+        method: "PUT",
+        headers: {
+          "content-type": "application/json",
+        },
+      }
+    )
+      .then((res) => res.json())
+      .then((result) => {
+        setRefetching(true);
+        toast.success("Experience deleted successfully");
+      });
   };
   //-------------///-------------------//
   return (
@@ -95,8 +115,11 @@ const CompletedTaskCard = ({
                 </Button>
               )}
               {toggleEdit && (
-                <DeleteButton CClass=" mx-3" clickHandler={handleToggleEdit}>
-                  Cancel
+                <DeleteButton
+                  CClass=" mx-3"
+                  clickHandler={() => handleToggleEdit(task)}
+                >
+                  Cancel Edit
                   <span className="sr-only">Send message</span>
                 </DeleteButton>
               )}
@@ -116,6 +139,12 @@ const CompletedTaskCard = ({
                 </DeleteButton>
               )}
             </>
+          )}
+          {taskComment && (
+            <DeleteButton CClass=" mx-3" clickHandler={handleCommentDelete}>
+              Delete Experience
+              <span className="sr-only">Send message</span>
+            </DeleteButton>
           )}
         </div>
       </div>

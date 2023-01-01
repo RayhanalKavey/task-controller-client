@@ -26,7 +26,7 @@ const EditComment = ({ task, taskComment }) => {
       .then((res) => res.json())
       .then((result) => {
         setRefetching(true);
-        toast.success("Comment edited successfully");
+        toast.success("Experience edited successfully");
       });
   };
 

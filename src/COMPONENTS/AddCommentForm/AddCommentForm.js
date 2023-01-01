@@ -26,7 +26,7 @@ const AddCommentForm = ({ task }) => {
       .then((res) => res.json())
       .then((result) => {
         setRefetching(true);
-        toast.success("Comment added successfully");
+        toast.success("Experience added successfully");
       });
   };
 
