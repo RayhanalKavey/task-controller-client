@@ -9,7 +9,7 @@ const Home = () => {
     <div className="bg-gray-50 dark:bg-teal-700">
       <Hero></Hero>
       <Features></Features>
-      <Carousal></Carousal>
+      {/* <Carousal></Carousal> */}
     </div>
   );
 };

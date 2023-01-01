@@ -9,12 +9,14 @@ import Home from "../../PAGES/home/Home/Home";
 import Media from "../../PAGES/Media/Media";
 import MyTask from "../../PAGES/MyTask/MyTask";
 import Profile from "../../PAGES/Profile/Profile";
+import ErrorPage from "../../PAGES/shared/ErrorPage/ErrorPage";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Main></Main>,
+    errorElement: <ErrorPage></ErrorPage>,
     children: [
       {
         path: "/",

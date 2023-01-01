@@ -6,13 +6,14 @@
 
 You can manage your upcoming tasks and even after complete.
 
-- From `Add Task` page user can add task. After adding it will be shown up on `My Task`.
-- From `My Task` user can `update`, `delete`, and `edit` task. If the task is done then user can press `complete` button to make it complete.
-- The completed task will be show in the `Completed Task` page. For here user can `reassign` the task, delete the task. Logged in user can also leave a comment for every task.
-- User can `add`, `edit` or `delete` comment on the `completed task`.
-- User can add `image` with a task. That task will show both in the `My Task` and the `All Media` page, But its only maintainable from `My Task` page.
+- From the `Add Task` page, user can add a task. After adding it will be appear on the `My Task` page. User can attach an image if the user wants, which will show up on the `All Media` page.
+- From `My Task`, user can `update`, `delete`, and `edit` tasks. If the task is done then user can press `complete` button to make it complete.
+- The completed task will appear on the `Completed Task` page. Here user can `reassign` as well as delete the task. Logged in user can also leave a comment for every task.
+- User can `add`, `edit` or `delete` comments in a `completed task`.
+- User can add `image` with a task. That task will appear both in the `My Task` and the `All Media` page, But its only maintainable from `My Task` page.
 - User need to to be logged in for using this website.
 - User can update his profile too!!
+- The exclusive dark mood is here !!
 
 ### Technology used in the Project
 

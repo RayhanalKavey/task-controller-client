@@ -10,6 +10,7 @@ import toast from "react-hot-toast";
 import AddTaskForm from "../../../COMPONENTS/AddTaskForm/AddTaskForm";
 import { IoMdAdd } from "react-icons/io";
 import { AiOutlineMinus } from "react-icons/ai";
+import logo from "../../../ASSETS/task-logo.png";
 
 const Navbar = () => {
   // Create a hook of THEME_CONTEXT in the ThemeProvider to use theme
@@ -97,17 +98,17 @@ const Navbar = () => {
   return (
     <nav className="relative  bg-teal-100 flex flex-col border-gray-200 px-2 sm:px-4 py-2.5 shadow dark:bg-teal-800">
       <div className="container flex flex-wrap gap-4 items-center justify-between  mx-auto">
-        <ul className="flex items-center gap-3 py-2">
+        <ul className="flex items-center justify-center gap-3 ">
           <li>
             {" "}
-            <Link to={"/"} className="flex  items-center">
-              {/* <img
-            src=""
-            className="h-6 mr-3 sm:h-9"
-            alt="logo"
-          /> */}
-              <span className="self-center text-xl font-semibold whitespace-nowrap text-teal-800 dark:text-white">
-                Task Controller
+            <Link to={"/"} className="flex flex-col justify-end items-start">
+              <img
+                src={logo}
+                className="border border-teal-800 bg-teal-100 p-1 rounded h-7"
+                alt="logo"
+              />
+              <span className="self-start text-2xl font-semibold whitespace-nowrap text-teal-800 dark:text-white">
+                Controller
               </span>
             </Link>
           </li>
@@ -118,7 +119,7 @@ const Navbar = () => {
             >
               {toggle ? (
                 <AiOutlineMinus
-                  size={"1.6rem"}
+                  size={"1.4rem"}
                   style={{
                     borderRadius: "50%",
                     padding: ".1rem",
@@ -126,7 +127,7 @@ const Navbar = () => {
                 />
               ) : (
                 <IoMdAdd
-                  size={"1.6rem"}
+                  size={"1.4rem"}
                   style={{
                     borderRadius: "50%",
                     padding: ".1rem",
@@ -142,7 +143,7 @@ const Navbar = () => {
             >
               {theme === "dark" ? (
                 <RxSun
-                  size={"1.6rem"}
+                  size={"1.5rem"}
                   color="teal"
                   style={{
                     border: "1px solid white",
@@ -153,7 +154,7 @@ const Navbar = () => {
                 />
               ) : (
                 <HiMoon
-                  size={"1.6rem"}
+                  size={"1.5rem"}
                   color="teal"
                   style={{
                     border: "1px solid teal",
