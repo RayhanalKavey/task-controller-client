@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useTask } from "../../CONTEXT/TaskProvider/TaskProvider";
 
-const AddCommentForm = ({ task }) => {
+const EditComment = ({ task, taskComment }) => {
   const { setRefetching } = useTask();
 
   ///Hook form
@@ -26,7 +26,7 @@ const AddCommentForm = ({ task }) => {
       .then((res) => res.json())
       .then((result) => {
         setRefetching(true);
-        toast.success("Comment added successfully");
+        toast.success("Comment edited successfully");
       });
   };
 
@@ -47,7 +47,8 @@ const AddCommentForm = ({ task }) => {
                 required: "Comment is required !",
               })}
               className="block h-20 p-2.5 w-full text-sm text-teal-800 bg-gray-50 rounded-lg border border-gray-300 focus:ring-teal-500 focus:border-teal-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-teal-500 dark:focus:border-teal-500"
-              placeholder="Add experience ...."
+              placeholder="Add comment ...."
+              defaultValue={taskComment}
             ></textarea>
             {/* erroR message */}
             {errors?.comment && (
@@ -67,4 +68,4 @@ const AddCommentForm = ({ task }) => {
   );
 };
 
-export default AddCommentForm;
+export default EditComment;

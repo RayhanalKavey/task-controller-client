@@ -113,7 +113,7 @@ const Navbar = () => {
           </li>
           <li>
             <Link
-              className="  border dark:border-teal-50 border-teal-700 block text-teal-700 rounded-full  hover:bg-gray-100 md:hover:bg-transparent  md:hover:text-gray-600 md:p-0 dark:text-white md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+              className="   border dark:border-teal-50 border-teal-700 block text-teal-700 rounded-full  hover:bg-gray-100 md:hover:bg-transparent  md:hover:text-gray-600 md:p-0 dark:text-white md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
               onClick={() => handleToggle()}
             >
               {toggle ? (
@@ -232,7 +232,7 @@ const Navbar = () => {
       </div>
 
       {toggle && (
-        <div className="self-stretch flex items-center">
+        <div className="  self-stretch flex items-center">
           <AddTaskForm handleToggle={handleToggle}></AddTaskForm>
         </div>
       )}

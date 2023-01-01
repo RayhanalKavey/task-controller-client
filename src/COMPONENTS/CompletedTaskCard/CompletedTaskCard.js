@@ -1,111 +1,122 @@
-import React from "react";
+import React, { useState } from "react";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import { AiOutlineClose } from "react-icons/ai";
 import AddCommentForm from "../AddCommentForm/AddCommentForm";
 import Button from "../Button/Button";
 import DeleteButton from "../Button/DeleteButton";
-import DeleteModal from "../../COMPONENTS/DeleteModal/DeleteModal";
+import EditComment from "../EditComment/EditComment";
 
 const CompletedTaskCard = ({
   task,
   handleNotCompleteTask,
   handleDeleteTask,
 }) => {
-  const { taskTitle, taskDetails } = task;
+  const { taskTitle, taskDetails, taskComment } = task;
+  const [toggleAdd, setToggleAdd] = useState(false);
+  const [toggleEdit, setToggleEdit] = useState(false);
+  //handle toggle Add
+  const handleToggleAdd = () => {
+    setToggleAdd(!toggleAdd);
+  };
+  //handle toggle Edit
+  const handleToggleEdit = () => {
+    setToggleEdit(!toggleEdit);
+  };
   //-------------///-------------------//
   return (
     <div className="w-[96%] mb-5 mx-auto bg-white border border-gray-200 rounded-md shadow-md dark:bg-gray-800 dark:border-gray-700 mt-4">
-      <div className="flex justify-end px-4 pt-3 gap-1 dark:text-white">
+      <div className="flex justify-end px-4 pt-6 gap-1 dark:text-white">
         <Button clickHandler={() => handleNotCompleteTask(task)}>
-          Not Completed!!
+          Add to My Task
         </Button>
         <DeleteButton clickHandler={() => handleDeleteTask(task)}>
-          <RiDeleteBin6Line size={"1.7rem"} style={{ cursor: "pointer" }} />
+          <RiDeleteBin6Line style={{ cursor: "pointer" }} />
         </DeleteButton>
-        {/* modal */}
-        {/* <button
-          className="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-          type="button"
-          data-modal-toggle="confirmation-modal"
-        >
-          Toggle modal
-        </button> */}
         <div
           id="confirmation-modal"
           tabIndex="-1"
           className="fixed top-0 left-0 right-0 z-50 hidden p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full"
-        >
-          <div className="relative w-full h-full max-w-md md:h-auto">
-            <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
-              <button
-                type="button"
-                className="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
-                data-modal-toggle="confirmation-modal"
-              >
-                <AiOutlineClose></AiOutlineClose>
-                <span className="sr-only">Close modal</span>
-              </button>
-              <div className="p-6 text-center">
-                {/* <svg
-              aria-hidden="true"
-              className="mx-auto mb-4 text-gray-400 w-14 h-14 dark:text-gray-200"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-              ></path>
-            </svg> */}
-                <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-                  Are you sure you want to delete this product?
-                </h3>
-                <button
-                  data-modal-toggle="confirmation-modal"
-                  type="button"
-                  className="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2"
-                >
-                  Yes, I'm sure
-                </button>
-                <button
-                  data-modal-toggle="confirmation-modal"
-                  type="button"
-                  className="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600"
-                >
-                  No, cancel
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+        ></div>
         {/* enD */}
       </div>
       <div className="flex flex-col px-5  pb-5 mt-2">
-        <h5 className="mb-0 text-xl font-medium text-teal-800 dark:text-white">
+        <h5 className="mb-1 text-xl font-medium text-teal-800 dark:text-white">
           <span className="font-bold">Title: </span> {taskTitle}
         </h5>
-        <p className="text-sm text-gray-500 dark:text-gray-400">
+        <div className="relative flex  items-center mb-3">
+          <div className="flex-grow border-t border-gray-200  "></div>
+        </div>
+        <p className="text-sm mt-1 text-gray-500 dark:text-gray-400">
           {taskDetails}
         </p>
+
         {/* Display comments  */}
         {task?.taskComment && (
-          <div className="mt-4 dark:text-white">
-            <h2 className="font-bold mb-1"> Comments</h2>
-            <ul className="flex flex-col gap-2">
-              <li className="border border-1 p-2 rounded-md">
+          <div className="mt-8 text-teal-800 dark:text-white">
+            {/* divider top */}
+            {/* <div className="flex-grow border-t border-gray-200"></div> */}
+            <h3 className="inline-block font-bold  pb-1">Task experience :</h3>
+            <div className="relative flex  items-center mb-3">
+              <div className="flex-grow border-t border-gray-200  "></div>
+            </div>
+
+            <ul className="flex flex-col">
+              <li className="text-sm pt-0 text-gray-500 dark:text-gray-400">
                 {task?.taskComment}
               </li>
             </ul>
+            {/* divider bottom */}
+            {/* <div className="relative flex pt-1 items-center">
+              <div className="flex-grow border-t border-gray-200"></div>
+            </div> */}
           </div>
         )}
 
-        {/* Add comment from */}
+        {/* Add comment from / When we don't have comment */}
         <div className="flex  flex-wrap items-center justify-center mt-4 space-x-3 md:mt-6 ">
-          <AddCommentForm task={task}></AddCommentForm>
+          {toggleAdd && !toggleEdit && (
+            <AddCommentForm task={task}></AddCommentForm>
+          )}
+          {toggleEdit && !toggleAdd && (
+            <EditComment
+              task={task}
+              taskComment={taskComment}
+              handleToggleEdit={handleToggleEdit}
+            ></EditComment>
+          )}
+        </div>
+        {/* Edit comment / When we have comment */}
+        <div>
+          {taskComment ? (
+            <>
+              {toggleEdit || (
+                <Button CClass="" clickHandler={handleToggleEdit}>
+                  Edit Experience
+                  <span className="sr-only">Send message</span>
+                </Button>
+              )}
+              {toggleEdit && (
+                <DeleteButton CClass=" mx-3" clickHandler={handleToggleEdit}>
+                  Cancel
+                  <span className="sr-only">Send message</span>
+                </DeleteButton>
+              )}
+            </>
+          ) : (
+            <>
+              {toggleAdd || (
+                <Button CClass=" " clickHandler={handleToggleAdd}>
+                  Add Experience
+                  <span className="sr-only">Send message</span>
+                </Button>
+              )}
+              {toggleAdd && (
+                <DeleteButton CClass=" mx-3" clickHandler={handleToggleAdd}>
+                  Cancel
+                  <span className="sr-only">Send message</span>
+                </DeleteButton>
+              )}
+            </>
+          )}
         </div>
       </div>
     </div>

@@ -5,7 +5,6 @@ import { useAuth } from "../../CONTEXT/AuthProvider/AuthProvider";
 import { useTask } from "../../CONTEXT/TaskProvider/TaskProvider";
 import useTitle from "../../HOOKS/useTitle/useTitle";
 import toast from "react-hot-toast";
-import DeleteModal from "../../COMPONENTS/DeleteModal/DeleteModal";
 
 const CompletedTask = () => {
   useTitle("Completed Task");
@@ -85,7 +84,6 @@ const CompletedTask = () => {
         Completed Tasks
       </h5>
       {content}
-      {/* <DeleteModal></DeleteModal> */}
     </div>
   );
 };
