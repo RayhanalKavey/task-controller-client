@@ -1,14 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import useTitle from "../../HOOKS/useTitle/useTitle";
 import { useTask } from "../../CONTEXT/TaskProvider/TaskProvider";
 import MyTaskCard from "../../COMPONENTS/MyTaskCard/MyTaskCard";
 import TaskLoading from "../../COMPONENTS/TaskLoading/TaskLoading";
 import toast from "react-hot-toast";
 import { useAuth } from "../../CONTEXT/AuthProvider/AuthProvider";
+import CustomModal from "../../COMPONENTS/CustomModal/CustomModal";
 
 const MyTask = () => {
   useTitle("My Task");
-
   // Get task data from task context
   const {
     state: { data, loading, error },
@@ -18,7 +18,33 @@ const MyTask = () => {
   //User from auth provider
   const { user } = useAuth();
 
-  // Handle make task as complete
+  ///Custom modal starT
+  const [closeModal, setCloseModal] = useState(false);
+  const [deletedTask, setDeletedTask] = useState({});
+  // Handle task in the modal after conformation
+  const handleModal = (result) => {
+    setCloseModal(false);
+    if (result) {
+      fetch(`${process.env.REACT_APP_api_url}/tasks/${deletedTask?._id}`, {
+        method: "DELETE",
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.deletedCount > 0) {
+            toast.success(`Task deleted successfully!!`);
+            setRefetching(true);
+          }
+        });
+    }
+  };
+  ///Custom modal enD
+
+  // Delete task handler
+  const handleDeleteTask = (task) => {
+    setCloseModal(true); // open the modal
+    setDeletedTask(task); //Bring the data
+  };
+
   const handleCompleteTask = (task) => {
     fetch(`${process.env.REACT_APP_api_url}/tasks/${task?._id}`, {
       method: "PUT",
@@ -27,19 +53,6 @@ const MyTask = () => {
       .then((data) => {
         if (data.modifiedCount > 0) {
           toast.success(`Done with task ${task?.taskTitle}!`);
-          setRefetching(true);
-        }
-      });
-  };
-  // Delete task handler
-  const handleDeleteTask = (task) => {
-    fetch(`${process.env.REACT_APP_api_url}/tasks/${task?._id}`, {
-      method: "DELETE",
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.deletedCount > 0) {
-          toast.success(`Task deleted successfully!!`);
           setRefetching(true);
         }
       });
@@ -94,7 +107,7 @@ const MyTask = () => {
       <h5 className="pb-5 text-center  pt-8 text-xl font-medium text-teal-800 dark:text-white">
         My Tasks
       </h5>
-      {/* <TaskLoading></TaskLoading> */}
+      {closeModal && <CustomModal handleModal={handleModal}></CustomModal>}{" "}
       {content}
     </div>
   );

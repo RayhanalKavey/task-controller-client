@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import CompletedTaskCard from "../../COMPONENTS/CompletedTaskCard/CompletedTaskCard";
 import TaskLoading from "../../COMPONENTS/TaskLoading/TaskLoading";
 import { useAuth } from "../../CONTEXT/AuthProvider/AuthProvider";
 import { useTask } from "../../CONTEXT/TaskProvider/TaskProvider";
 import useTitle from "../../HOOKS/useTitle/useTitle";
 import toast from "react-hot-toast";
+import CustomModal from "../../COMPONENTS/CustomModal/CustomModal";
 
 const CompletedTask = () => {
   useTitle("Completed Task");
@@ -17,6 +18,27 @@ const CompletedTask = () => {
     state: { data, loading, error },
     setRefetching,
   } = useTask();
+
+  ///Custom modal starT
+  const [closeModal, setCloseModal] = useState(false);
+  const [deletedTask, setDeletedTask] = useState({});
+  // Handle task in the modal after conformation
+  const handleModal = (result) => {
+    setCloseModal(false);
+    if (result) {
+      fetch(`${process.env.REACT_APP_api_url}/tasks/${deletedTask?._id}`, {
+        method: "DELETE",
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.deletedCount > 0) {
+            toast.success(`Task deleted successfully!!`);
+            setRefetching(true);
+          }
+        });
+    }
+  };
+  ///Custom modal enD
 
   /// Make task as not complete yet
   const handleNotCompleteTask = (task) => {
@@ -34,16 +56,8 @@ const CompletedTask = () => {
 
   // Delete task handler
   const handleDeleteTask = (task) => {
-    fetch(`${process.env.REACT_APP_api_url}/tasks/${task?._id}`, {
-      method: "DELETE",
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.deletedCount > 0) {
-          toast.success(`Task deleted successfully!!`);
-          setRefetching(true);
-        }
-      });
+    setCloseModal(true);
+    setDeletedTask(task);
   };
 
   // Setup conditions for rendering the task accordingly
@@ -83,6 +97,8 @@ const CompletedTask = () => {
       <h5 className="mb-5 text-center  pt-8 text-xl font-medium text-teal-800 dark:text-white">
         Completed Tasks
       </h5>
+      {closeModal && <CustomModal handleModal={handleModal}></CustomModal>}{" "}
+      {content}
       {content}
     </div>
   );

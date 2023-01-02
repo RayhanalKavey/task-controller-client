@@ -6,6 +6,7 @@ import DeleteButton from "../Button/DeleteButton";
 import EditComment from "../EditComment/EditComment";
 import { useTask } from "../../CONTEXT/TaskProvider/TaskProvider";
 import toast from "react-hot-toast";
+import CustomModal from "../../COMPONENTS/CustomModal/CustomModal";
 
 const CompletedTaskCard = ({
   task,
@@ -24,26 +25,36 @@ const CompletedTaskCard = ({
   const handleToggleEdit = () => {
     setToggleEdit(!toggleEdit);
   };
+  ///Custom modal starT
+  const [closeModal, setCloseModal] = useState(false);
+  // Handle task in the modal after conformation
+  const handleModal = (result) => {
+    setCloseModal(false);
+    if (result) {
+      fetch(
+        `${process.env.REACT_APP_api_url}/tasks/comments/remove-comment/${task?._id}`,
+        {
+          method: "PUT",
+          headers: {
+            "content-type": "application/json",
+          },
+        }
+      )
+        .then((res) => res.json())
+        .then((result) => {
+          setRefetching(true);
+          toast.success("Experience deleted successfully");
+        });
+    }
+  };
+  ///Custom modal enD
   const handleCommentDelete = () => {
-    // console.log("clicked", task?._id);
-    fetch(
-      `${process.env.REACT_APP_api_url}/tasks/comments/remove-comment/${task?._id}`,
-      {
-        method: "PUT",
-        headers: {
-          "content-type": "application/json",
-        },
-      }
-    )
-      .then((res) => res.json())
-      .then((result) => {
-        setRefetching(true);
-        toast.success("Experience deleted successfully");
-      });
+    setCloseModal(true);
   };
   //-------------///-------------------//
   return (
     <div className="w-[96%] mb-5 mx-auto bg-white border border-gray-200 rounded-md shadow-md dark:bg-gray-800 dark:border-gray-700 mt-4">
+      {closeModal && <CustomModal handleModal={handleModal}></CustomModal>}
       <div className="flex justify-end px-4 pt-6 gap-1 dark:text-white">
         <Button clickHandler={() => handleNotCompleteTask(task)}>
           Add to My Task
@@ -68,7 +79,6 @@ const CompletedTaskCard = ({
         <p className="text-sm mt-1 text-gray-500 dark:text-gray-400">
           {taskDetails}
         </p>
-
         {/* Display comments  */}
         {task?.taskComment && (
           <div className="mt-8 text-teal-800 dark:text-white">
@@ -90,7 +100,6 @@ const CompletedTaskCard = ({
             </div> */}
           </div>
         )}
-
         {/* Add comment from / When we don't have comment */}
         <div className="flex  flex-wrap items-center justify-center mt-4 space-x-3 md:mt-6 ">
           {toggleAdd && !toggleEdit && (
