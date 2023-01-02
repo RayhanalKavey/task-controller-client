@@ -68,7 +68,7 @@ const MyTask = () => {
   if (!loading && !error && data.length === 0) {
     content = (
       <div className="min-h-screen">
-        <div className="text-3xl text-center mt-8 text-teal-500 dark:text-gray-300  flex flex-col gap-2 justify-start mx-auto p-3 rounded-lg shadow-lg border  border-red-500 w-fit">
+        <div className="text-3xl text-center mt-8 text-teal-800 dark:text-gray-300  flex flex-col gap-2 justify-start mx-auto p-3 rounded-lg shadow-lg border  border-red-500 w-fit">
           No task to do?? Add some task!!
         </div>
       </div>
