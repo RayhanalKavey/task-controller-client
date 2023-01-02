@@ -15,17 +15,27 @@ const Login = () => {
   const {
     register,
     formState: { errors },
+    reset,
     handleSubmit,
   } = useForm();
 
   /// Auth Context
-  const { login, googleLogin, setUser } = useAuth();
-
+  const { login, googleLogin, setUser, user } = useAuth();
   /// redirect user
   const navigate = useNavigate();
   //user location where they want to go
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
+
+  // Reset Pass
+  // const handleReset = () => {
+  //   console.log("Click", user?.email);
+  //   // resetPassword(user?.email)
+  //   //   .then(() => {
+  //   //     toast.success("Reset link has been sent, please check email");
+  //   //   })
+  //   //   .catch((error) => setLoginError(error.message));
+  // };
 
   /// Handle login
 
@@ -38,10 +48,16 @@ const Login = () => {
       .then((result) => {
         const user = result.user;
 
-        //Navigate user to the desired path
-        navigate(from, { replace: true });
-
-        toast.success(`Welcome to your Task Controller`);
+        // If user don't verify email, do not navigate user
+        if (user?.emailVerified) {
+          reset();
+          toast.success(`Welcome to your Task Controller`);
+          //Navigate user to the desired path
+          navigate(from, { replace: true });
+        } else {
+          reset();
+          toast.error(`Please verify your email!!`);
+        }
       })
       .catch((error) => {
         setLoginError(error.message);
@@ -63,6 +79,7 @@ const Login = () => {
         setLoginError(error.message);
       });
   };
+
   return (
     <section className="bg-gray-50 dark:bg-teal-500">
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
@@ -122,12 +139,12 @@ const Login = () => {
                 )}
               </div>
               <div className="flex items-center justify-between">
-                {/* <a
-                  href="/"
-                  className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500"
+                {/* <button
+                  onClick={handleReset}
+                  className="text-sm font-medium  hover:underline text-gray-500 dark:text-gray-400"
                 >
                   Forgot password?
-                </a> */}
+                </button> */}
               </div>
               {/* Submit */}
 

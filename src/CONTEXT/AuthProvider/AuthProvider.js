@@ -9,6 +9,7 @@ import {
   signInWithPopup,
   onAuthStateChanged,
   signOut,
+  sendEmailVerification,
 } from "firebase/auth";
 
 const AUTH_CONTEXT = createContext();
@@ -46,7 +47,9 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       console.log("Inside auth state change", currentUser);
-      setUser(currentUser);
+      if (currentUser === null || currentUser.emailVerified) {
+        setUser(currentUser);
+      }
       setLoading(false);
     });
     return () => unsubscribe();
@@ -57,8 +60,15 @@ const AuthProvider = ({ children }) => {
     setLoading(true);
     return signOut(auth);
   };
+  // --------- Forget Password
+  const resetPassword = (email) => {
+    setLoading(true);
+    // return sendPasswordResetEmail(auth, email);
+  };
   // Verify email
-
+  const verifyEmail = () => {
+    return sendEmailVerification(auth.currentUser);
+  };
   const authInfo = {
     user,
     setUser,
@@ -69,6 +79,8 @@ const AuthProvider = ({ children }) => {
     logout,
     loading,
     setReload,
+    resetPassword,
+    verifyEmail,
   };
   return (
     <AUTH_CONTEXT.Provider value={authInfo}>{children}</AUTH_CONTEXT.Provider>

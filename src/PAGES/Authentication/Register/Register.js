@@ -14,12 +14,19 @@ const Register = () => {
   const {
     register,
     formState: { errors },
+    reset,
     handleSubmit,
   } = useForm();
 
   // Auth Context
-  const { createUser, updateUserProfile, googleLogin, setUser, setReload } =
-    useAuth();
+  const {
+    createUser,
+    updateUserProfile,
+    googleLogin,
+    setUser,
+    setReload,
+    verifyEmail,
+  } = useAuth();
 
   // Redirect user where they want to go
   const navigate = useNavigate();
@@ -33,7 +40,11 @@ const Register = () => {
   const handleRegister = (data) => {
     const { name, email, password, photoURL } = data;
     setSignUpError("");
+    updatePhoto(name, photoURL); //Declare update photo first then create user. Otherwise profile and profile photo will not be updated. work pause when reach to email verification.
     handleCreateUser(email, password);
+  };
+
+  function updatePhoto(name, photoURL) {
     const image = photoURL[0];
     const formData = new FormData();
     formData.append("image", image);
@@ -48,31 +59,14 @@ const Register = () => {
         .then((res) => res.json())
         .then((imgData) => {
           if (imgData.success) {
-            const photoURL = imgData.data.url;
-
+            const photoURL = imgData?.data.url;
             handleUpdateUserProfile(name, photoURL);
           }
         })
         .catch((error) => {
           setSignUpError(error.message);
         });
-  };
-
-  /// Create user with email and password
-  const handleCreateUser = (email, password) => {
-    createUser(email, password)
-      .then((result) => {
-        const user = result.user;
-        toast.success(
-          `Welcome!! You registered with ${user?.displayName}. Update Your profile!!`
-        );
-        // Navigate user to the desired path
-        navigate(from, { replace: true });
-      })
-      .catch((error) => {
-        setSignUpError(error.message);
-      });
-  };
+  }
 
   /// Update user profile.
   const handleUpdateUserProfile = (name, photoURL) => {
@@ -83,20 +77,49 @@ const Register = () => {
     updateUserProfile(profile)
       .then((result) => {
         setReload(true); //reload when successfully signed up to update the photo
+        navigate("/");
 
+        // console.log("inside photo upload");
         // Navigate user to the desired path
-        navigate(from, { replace: true });
+        // navigate(from, { replace: true });
       })
       .catch((error) => {
-        setSignUpError(error.message);
+        setSignUpError(error?.message);
       });
   };
 
+  /// Create user with email and password
+  const handleCreateUser = (email, password) => {
+    createUser(email, password)
+      .then((result) => {
+        reset();
+        toast.success(
+          `Registered successfully !!  Please verify your email!! `
+        );
+        handleEmailVerification();
+        // navigate("/");
+      })
+      .catch((error) => {
+        setSignUpError(error?.message);
+      })
+      .finally(() => {
+        setReload(false);
+      });
+  };
+  /// Handle email verification
+  const handleEmailVerification = () => {
+    verifyEmail()
+      .then(() => {
+        //  navigate("/");
+        // toast.success(` Please verify your email!!`);
+      })
+      .catch((error) => toast.error(error?.message));
+  };
   /// LogIn/sign up with google
   const handleGoogleLogin = () => {
     googleLogin()
       .then((result) => {
-        const user = result.user;
+        const user = result?.user;
         setUser(user);
 
         //Navigate user to the desired path
@@ -236,7 +259,7 @@ const Register = () => {
               </p>
               {signUpError && (
                 <label className="label">
-                  <span className="label-text-alt text-error">
+                  <span className="label-text-alt text-rose-500">
                     {signUpError}
                   </span>
                 </label>

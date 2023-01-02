@@ -1,18 +1,18 @@
 import React, { useState } from "react";
 import { useAuth } from "../../CONTEXT/AuthProvider/AuthProvider";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
 import useTitle from "../../HOOKS/useTitle/useTitle";
+import toast from "react-hot-toast";
 
 const Profile = () => {
   useTitle("Update Profile");
-  const navigate = useNavigate();
   const [updateError, setUpdateError] = useState("");
 
   // React Hook Form
   const {
     register,
     formState: { errors },
+    reset,
     handleSubmit,
   } = useForm();
   // Auth Context
@@ -52,8 +52,8 @@ const Profile = () => {
     updateUserProfile(profile)
       .then((result) => {
         setReload(true);
-        // Navigate user to the desired path
-        navigate("/my-task");
+        toast.success("Profile updated successfully");
+        reset();
       })
       .catch((error) => {
         setUpdateError(error.message);
