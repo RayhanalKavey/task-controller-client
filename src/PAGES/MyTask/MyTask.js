@@ -6,6 +6,7 @@ import TaskLoading from "../../COMPONENTS/TaskLoading/TaskLoading";
 import toast from "react-hot-toast";
 import { useAuth } from "../../CONTEXT/AuthProvider/AuthProvider";
 import CustomModal from "../../COMPONENTS/CustomModal/CustomModal";
+import { format } from "date-fns";
 
 const MyTask = () => {
   useTitle("My Task");
@@ -14,7 +15,8 @@ const MyTask = () => {
     state: { data, loading, error },
     setRefetching,
   } = useTask();
-
+  //current date
+  const currentDate = format(new Date(), "PP");
   //User from auth provider
   const { user } = useAuth();
 
@@ -45,14 +47,21 @@ const MyTask = () => {
     setDeletedTask(task); //Bring the data
   };
 
-  const handleCompleteTask = (task) => {
-    fetch(`${process.env.REACT_APP_api_url}/tasks/${task?._id}`, {
-      method: "PUT",
-    })
+  const handleCompleteTask = (completeTask) => {
+    fetch(
+      `${process.env.REACT_APP_api_url}/tasks/complete/${completeTask?._id}`,
+      {
+        method: "PUT",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({ currentDate }),
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         if (data.modifiedCount > 0) {
-          toast.success(`Done with task ${task?.taskTitle}!`);
+          toast.success(`Done with task ${completeTask?.taskTitle}!`);
           setRefetching(true);
         }
       });

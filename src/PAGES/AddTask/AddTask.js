@@ -7,12 +7,14 @@ import { useAuth } from "../../CONTEXT/AuthProvider/AuthProvider";
 import toast from "react-hot-toast";
 import { useTask } from "../../CONTEXT/TaskProvider/TaskProvider";
 import DeleteButton from "../../COMPONENTS/Button/DeleteButton";
+import { format } from "date-fns";
 
 const AddTask = () => {
   useTitle("Add Task");
   // const [imgU, setImgU] = useState("");
   const [toggle, setToggle] = useState(false);
-
+  //current date
+  const currentDate = format(new Date(), "PP");
   //handle toggle
   const handleToggle = () => {
     setToggle(!toggle);
@@ -44,6 +46,7 @@ const AddTask = () => {
       photoText: "A laptop resell website",
       isComplete: false,
       userEmail: user?.email,
+      startingDate: currentDate,
     };
 
     toggle || postTaskForm(task);

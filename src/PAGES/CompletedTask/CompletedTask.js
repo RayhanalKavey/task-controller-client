@@ -99,7 +99,6 @@ const CompletedTask = () => {
       </h5>
       {closeModal && <CustomModal handleModal={handleModal}></CustomModal>}{" "}
       {content}
-      {content}
     </div>
   );
 };

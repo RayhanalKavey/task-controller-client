@@ -14,7 +14,8 @@ const CompletedTaskCard = ({
   handleDeleteTask,
 }) => {
   const { setRefetching } = useTask();
-  const { taskTitle, taskDetails, taskComment } = task;
+  const { taskTitle, taskDetails, taskComment, startingDate, completionDate } =
+    task;
   const [toggleAdd, setToggleAdd] = useState(false);
   const [toggleEdit, setToggleEdit] = useState(false);
   //handle toggle Add
@@ -55,13 +56,23 @@ const CompletedTaskCard = ({
   return (
     <div className="w-[96%] mb-5 mx-auto bg-white border border-gray-200 rounded-md shadow-md dark:bg-gray-800 dark:border-gray-700 mt-4">
       {closeModal && <CustomModal handleModal={handleModal}></CustomModal>}
-      <div className="flex justify-end px-4 pt-6 gap-1 dark:text-white">
-        <Button clickHandler={() => handleNotCompleteTask(task)}>
-          Add to My Task
-        </Button>
-        <DeleteButton clickHandler={() => handleDeleteTask(task)}>
-          <RiDeleteBin6Line style={{ cursor: "pointer" }} />
-        </DeleteButton>
+      <div className="flex justify-between ml-1 px-4 pt-6 gap-1 dark:text-white">
+        <p className="text-teal-800 dark:text-white text-end">
+          <span className="font-semibold">Issue Date:- </span>
+          {startingDate}
+          <span className="font-bold text-xl "> || </span>
+          <span className="font-semibold ">Completion Date:- </span>
+          {completionDate}
+        </p>
+        <div>
+          {" "}
+          <Button clickHandler={() => handleNotCompleteTask(task)}>
+            Add to My Task
+          </Button>
+          <DeleteButton clickHandler={() => handleDeleteTask(task)}>
+            <RiDeleteBin6Line style={{ cursor: "pointer" }} />
+          </DeleteButton>
+        </div>
         <div
           id="confirmation-modal"
           tabIndex="-1"
@@ -94,10 +105,6 @@ const CompletedTaskCard = ({
                 {task?.taskComment}
               </li>
             </ul>
-            {/* divider bottom */}
-            {/* <div className="relative flex pt-1 items-center">
-              <div className="flex-grow border-t border-gray-200"></div>
-            </div> */}
           </div>
         )}
         {/* Add comment from / When we don't have comment */}

@@ -6,6 +6,7 @@ import { useTask } from "../../CONTEXT/TaskProvider/TaskProvider";
 import Button from "../Button/Button";
 import toast from "react-hot-toast";
 import DeleteButton from "../Button/DeleteButton";
+import { format } from "date-fns";
 
 const AddTaskForm = ({ handleToggle }) => {
   const { setRefetching } = useTask();
@@ -19,7 +20,9 @@ const AddTaskForm = ({ handleToggle }) => {
     reset,
     formState: { errors },
   } = useForm();
-
+  //current date
+  const currentDate = format(new Date(), "PP");
+  // console.log(currentDate);
   const handleTask = (data) => {
     const { taskTitle, description, photoURL } = data;
     // img: photoURL,
@@ -29,6 +32,7 @@ const AddTaskForm = ({ handleToggle }) => {
       photoText: "A laptop resell website",
       isComplete: false,
       userEmail: user?.email,
+      startingDate: currentDate,
     };
 
     // postTaskForm(task);
@@ -55,7 +59,7 @@ const AddTaskForm = ({ handleToggle }) => {
   }
   return (
     <form
-      className="absolute top-12  flex flex-col w-fit p-5 gap-8 mb-5 mx-auto bg-white border border-gray-200 rounded-md shadow-2xl dark:bg-gray-800 dark:border-gray-700 mt-4"
+      className="absolute z-20 top-12  flex flex-col w-fit p-5 gap-8 mb-5 mx-auto bg-white border border-gray-200 rounded-md shadow-2xl dark:bg-gray-800 dark:border-gray-700 mt-4"
       // className="flex gap-8 flex-col w-[98%] mx-auto"
       onSubmit={handleSubmit(handleTask)}
     >
