@@ -48,16 +48,22 @@ const Login = () => {
       .then((result) => {
         const user = result.user;
 
-        // If user don't verify email, do not navigate user
-        if (user?.emailVerified) {
-          reset();
-          toast.success(`Welcome to your Task Controller`);
-          //Navigate user to the desired path
-          navigate(from, { replace: true });
-        } else {
-          reset();
-          toast.error(`Please verify your email!!`);
-        }
+        // // If user don't verify email, do not navigate user
+        // if (user?.emailVerified) {
+        //   reset();
+        //   toast.success(`Welcome to your Task Controller`);
+        //   //Navigate user to the desired path
+        //   navigate(from, { replace: true });
+        // } else {
+        //   reset();
+        //   toast.error(`Please verify your email!!`);
+        // }
+
+        // If user  verify email deactivated
+        reset();
+        toast.success(`Welcome to your Task Controller`);
+        //Navigate user to the desired path
+        navigate(from, { replace: true });
       })
       .catch((error) => {
         setLoginError(error.message);

@@ -77,7 +77,7 @@ const Register = () => {
     updateUserProfile(profile)
       .then((result) => {
         setReload(true); //reload when successfully signed up to update the photo
-        navigate("/");
+        // navigate("/");
 
         // console.log("inside photo upload");
         // Navigate user to the desired path
@@ -93,18 +93,21 @@ const Register = () => {
     createUser(email, password)
       .then((result) => {
         reset();
-        toast.success(
-          `Registered successfully !!  Please verify your email!! `
-        );
-        handleEmailVerification();
-        // navigate("/");
+        toast.success(`Registered successfully !! `);
+
+        // toast.success(
+        //   `Registered successfully !!  Please verify your email!! `
+        // );
+        // handleEmailVerification();
+        navigate(from, { replace: true });
       })
       .catch((error) => {
         setSignUpError(error?.message);
-      })
-      .finally(() => {
-        setReload(false);
       });
+    //When email verify active
+    // .finally(() => {
+    //   setReload(false);
+    // });
   };
   /// Handle email verification
   const handleEmailVerification = () => {
