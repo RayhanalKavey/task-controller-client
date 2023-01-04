@@ -19,6 +19,7 @@ const AddTask = () => {
   const handleToggle = () => {
     setToggle(!toggle);
   };
+  const taskImportance = ["To Do", "Important", "Must Do"];
 
   const { setRefetching } = useTask();
   const { user } = useAuth();
@@ -38,7 +39,7 @@ const AddTask = () => {
 
   ///--------------------------------------
   const handleTask = (data) => {
-    const { taskTitle, description, photoURL } = data;
+    const { taskTitle, description, photoURL, importance } = data;
     // img: photoURL,
     const task = {
       taskTitle: taskTitle,
@@ -47,6 +48,7 @@ const AddTask = () => {
       isComplete: false,
       userEmail: user?.email,
       startingDate: currentDate,
+      importance,
     };
 
     toggle || postTaskForm(task);
@@ -155,6 +157,29 @@ const AddTask = () => {
                 {errors.description?.message}
               </p>
             )}
+          </div>
+          {/* /// Select task importance */}
+          <div>
+            <label
+              htmlFor="message"
+              className="block mb-2 text-sm font-medium text-teal-800 dark:text-white"
+            >
+              Task Importance
+            </label>
+
+            <select
+              {...register("importance")}
+              className="block p-2.5 w-full text-sm text-teal-800 bg-gray-50 rounded-lg border border-gray-300 focus:ring-teal-500 focus:border-teal-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-teal-500 dark:focus:border-teal-500"
+            >
+              <option disabled>
+                Please Select an importance for your task.
+              </option>
+              {taskImportance?.map((importance, i) => (
+                <option value={importance} key={i}>
+                  {importance}
+                </option>
+              ))}
+            </select>
           </div>
           {/*/// photoURL */}
           {toggle && (

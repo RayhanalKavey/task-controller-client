@@ -9,13 +9,15 @@ import { useTask } from "../../CONTEXT/TaskProvider/TaskProvider";
 import DeleteButton from "../../COMPONENTS/Button/DeleteButton";
 
 const EditTask = ({ task, handleToggle }) => {
-  useTitle("Add Task");
+  useTitle("Edit Task");
   const [photoo, usePhotoo] = useState("");
 
   const { setRefetching } = useTask();
   const { user } = useAuth();
   //------------- redirect user
   const navigate = useNavigate();
+
+  const taskImportance = ["To Do", "Important", "Must Do"];
 
   ///Hook form
   const {
@@ -30,36 +32,13 @@ const EditTask = ({ task, handleToggle }) => {
 
   ///--------------------------------------
   const handleTask = (data) => {
-    const { taskTitle, description, photoURL } = data;
+    const { taskTitle, description, photoURL, importance } = data;
     // img: photoURL,
     const taskValue = {
       taskTitle: taskTitle,
       taskDetails: description,
-
-      // isComplete: false,
-      // userEmail: user?.email,
+      importance,
     };
-    // const image = photoURL[0];
-    // const formData = new FormData();
-    // formData.append("image", image);
-    // // console.log("data", data);
-    // // console.log("photoURL", photoURL);
-    // // console.log("photoURL[0]", image);
-    // /// send image to the dedicated image hosting server imgbb
-    // const url = `https://api.imgbb.com/1/upload?key=${imageHostKey}`;
-    // image !== undefined &&
-    //   fetch(url, {
-    //     method: "POST",
-    //     body: formData,
-    //   })
-    //     .then((res) => res.json())
-    //     .then((imgData) => {
-    //       if (imgData.success) {
-    //         const photoURL = imgData.data.url;
-    //         // usePhotoo(photoURL);
-    //         ///// add to media
-    //       }
-    //     });
 
     postTaskForm(taskValue);
   };
@@ -116,6 +95,27 @@ const EditTask = ({ task, handleToggle }) => {
           {errors?.taskTitle && (
             <p className="text-rose-500 mt-1"> {errors.taskTitle?.message}</p>
           )}
+        </div>
+        {/* /// Select task importance */}
+        <div>
+          <label
+            htmlFor="message"
+            className="block mb-2 text-sm font-medium text-teal-800 dark:text-white"
+          >
+            Task Importance
+          </label>
+
+          <select
+            {...register("importance")}
+            className="block p-2.5 w-full text-sm text-teal-800 bg-gray-50 rounded-lg border border-gray-300 focus:ring-teal-500 focus:border-teal-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-teal-500 dark:focus:border-teal-500"
+          >
+            <option disabled>Please Select an importance for your task.</option>
+            {taskImportance?.map((importance, i) => (
+              <option value={importance} key={i}>
+                {importance}
+              </option>
+            ))}
+          </select>
         </div>
         {/*/// task */}
         <div>

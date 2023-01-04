@@ -13,6 +13,9 @@ const AddTaskForm = ({ handleToggle }) => {
   const { user } = useAuth();
   //------------- redirect user
   const navigate = useNavigate();
+
+  const taskImportance = ["To Do", "Important", "Must Do"];
+
   ///Hook form
   const {
     register,
@@ -24,15 +27,16 @@ const AddTaskForm = ({ handleToggle }) => {
   const currentDate = format(new Date(), "PP");
   // console.log(currentDate);
   const handleTask = (data) => {
-    const { taskTitle, description, photoURL } = data;
+    const { taskTitle, description, importance } = data;
     // img: photoURL,
     const task = {
       taskTitle: taskTitle,
       taskDetails: description,
-      photoText: "A laptop resell website",
+      photoText: "",
       isComplete: false,
       userEmail: user?.email,
       startingDate: currentDate,
+      importance,
     };
 
     // postTaskForm(task);
@@ -60,7 +64,6 @@ const AddTaskForm = ({ handleToggle }) => {
   return (
     <form
       className="absolute z-20 top-12  flex flex-col w-fit p-5 gap-8 mb-5 mx-auto bg-white border border-gray-200 rounded-md shadow-2xl dark:bg-gray-800 dark:border-gray-700 mt-4"
-      // className="flex gap-8 flex-col w-[98%] mx-auto"
       onSubmit={handleSubmit(handleTask)}
     >
       {/*/// Title */}
@@ -85,6 +88,27 @@ const AddTaskForm = ({ handleToggle }) => {
         {errors?.taskTitle && (
           <p className="text-rose-500 mt-1"> {errors.taskTitle?.message}</p>
         )}
+      </div>
+      {/* /// Select task importance */}
+      <div>
+        <label
+          htmlFor="message"
+          className="block mb-2 text-sm font-medium text-teal-800 dark:text-white"
+        >
+          Task Importance
+        </label>
+
+        <select
+          {...register("importance")}
+          className="block p-2.5 w-full text-sm text-teal-800 bg-gray-50 rounded-lg border border-gray-300 focus:ring-teal-500 focus:border-teal-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-teal-500 dark:focus:border-teal-500"
+        >
+          <option disabled>Please Select an importance for your task.</option>
+          {taskImportance?.map((importance, i) => (
+            <option value={importance} key={i}>
+              {importance}
+            </option>
+          ))}
+        </select>
       </div>
       {/*/// task */}
       <div className="w-full">

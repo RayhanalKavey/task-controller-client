@@ -6,6 +6,7 @@ import { useTask } from "../../CONTEXT/TaskProvider/TaskProvider";
 
 import toast from "react-hot-toast";
 import { useAuth } from "../../CONTEXT/AuthProvider/AuthProvider";
+import { Link } from "react-router-dom";
 
 const Media = () => {
   useTitle("Media");
@@ -37,14 +38,75 @@ const Media = () => {
       ?.map((task, i) => (
         <figure
           key={i}
-          className="relative max-w-[240px] transition-all duration-300 cursor-pointer filter grayscale hover:grayscale-0"
+          className="relative shadow-xl rounded-md max-w-[240px] transition-all duration-300 cursor-pointer filter grayscale hover:grayscale-0 dark:bg-teal-600"
         >
-          <a href="/">
-            <img className="rounded-lg" src={task?.img} alt=" description" />
-          </a>
-          <figcaption className="absolute bottom-6 px-4 text-lg text-white">
-            <p>{task?.taskDetails}</p>
-          </figcaption>
+          {/* The difference between two condition is whether the task is complete or not. */}
+          {task?.isComplete || (
+            <Link to="/my-task">
+              <img
+                className=" rounded-t-md"
+                src={task?.img}
+                alt=" description"
+              />
+              <figcaption className=" bottom-6 p-2 text-lg text-teal-600">
+                <p>
+                  <span className=" uppercase text-sm">Task Title:</span>{" "}
+                  <span className="text-sm">{task?.taskTitle}</span>
+                </p>
+                <p className="mb-2">
+                  {" "}
+                  <span className=" uppercase text-sm">
+                    Task Issue Date:
+                  </span>{" "}
+                  <span className="text-sm">{task?.startingDate}</span>
+                </p>
+
+                <p>
+                  <span className=" uppercase text-sm">Task Details:</span>{" "}
+                  <span className="text-sm">{task?.taskDetails}</span>
+                </p>
+                <p>
+                  <span className=" uppercase text-sm">Completion Status:</span>{" "}
+                  <span className="text-sm">
+                    {task?.isComplete ? "Task Completed!" : "Yet to do!"}
+                  </span>
+                </p>
+              </figcaption>
+            </Link>
+          )}
+          {task?.isComplete && (
+            <Link to="/completed-task">
+              <img
+                className=" rounded-t-md"
+                src={task?.img}
+                alt=" description"
+              />
+              <figcaption className="dark:text-gray-200 bottom-6 p-2 text-lg text-teal-600">
+                <p>
+                  <span className=" uppercase text-sm">Task Title:</span>{" "}
+                  <span className="text-sm">{task?.taskTitle}</span>
+                </p>
+                <p className="mb-2">
+                  {" "}
+                  <span className=" uppercase text-sm">
+                    Task Issue Date:
+                  </span>{" "}
+                  <span className="text-sm">{task?.startingDate}</span>
+                </p>
+
+                <p>
+                  <span className=" uppercase text-sm">Task Details:</span>{" "}
+                  <span className="text-sm">{task?.taskDetails}</span>
+                </p>
+                <p>
+                  <span className=" uppercase text-sm">Completion Status:</span>{" "}
+                  <span className="text-sm">
+                    {task?.isComplete ? "Task Completed!" : "Yet to do!"}
+                  </span>
+                </p>
+              </figcaption>
+            </Link>
+          )}
         </figure>
       ));
   }

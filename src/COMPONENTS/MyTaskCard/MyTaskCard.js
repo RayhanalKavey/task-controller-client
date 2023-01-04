@@ -6,7 +6,7 @@ import DeleteButton from "../Button/DeleteButton";
 import EditTask from "../../PAGES/AddTask/EditTask";
 
 const MyTaskCard = ({ task, handleCompleteTask, handleDeleteTask }) => {
-  const { taskTitle, taskDetails, startingDate } = task;
+  const { taskTitle, taskDetails, startingDate, importance } = task;
   const [toggleEdit, setToggleEdit] = useState(false);
   //handle toggle edit
   const handleToggle = () => {
@@ -22,9 +22,25 @@ const MyTaskCard = ({ task, handleCompleteTask, handleDeleteTask }) => {
           <span className="font-semibold">Issue Date:- </span>
           {startingDate}
         </p>
-        <h3 className="text-teal-800  dark:text-white inline-block font-bold  pb-1">
-          <span className="uppercase">Task Title:- </span> {taskTitle}
-        </h3>
+
+        <div className="flex justify-between mt-2">
+          <h3 className=" text-teal-800  dark:text-white  font-bold  pb-1">
+            <span className="uppercase">Task Title:- </span> {taskTitle}{" "}
+          </h3>
+          <h3 className=" text-teal-800  dark:text-white  font-bold  pb-1">
+            <span className="uppercase">Importance:- </span>{" "}
+            <span
+              className={` rounded-md px-2 py-[.1rem] ${
+                importance === "To Do" && "bg-teal-400"
+              } ${importance === "Important" && "bg-orange-400"} ${
+                importance === "Must Do" && "bg-red-400"
+              } 
+                `}
+            >
+              {importance}
+            </span>
+          </h3>
+        </div>
 
         <div className="relative flex  items-center mb-2">
           <div className="flex-grow border-t border-gray-200  "></div>
