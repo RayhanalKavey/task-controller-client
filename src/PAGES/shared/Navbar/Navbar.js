@@ -16,12 +16,16 @@ const Navbar = () => {
   // Create a hook of THEME_CONTEXT in the ThemeProvider to use theme
   const { theme, setTheme } = useTheme();
   const [toggle, setToggle] = useState(false);
+  const [openNav, setOpenNav] = useState(false);
 
   //handle toggle
   const handleToggle = () => {
     setToggle(!toggle);
   };
-
+  // handle navbar
+  const handleNavbar = () => {
+    setOpenNav(!openNav);
+  };
   // Theme Switch handler
   const handleThemeSwitch = () => {
     setTheme(theme === "dark" ? "light" : "dark");
@@ -166,13 +170,14 @@ const Navbar = () => {
             </Link>
           </li>
         </ul>
-
+        {/* ///button */}
         <button
-          data-collapse-toggle="navbar-default"
+          // data-collapse-toggle="navbar-default"
           type="button"
+          onClick={handleNavbar}
           className="inline-flex items-center  p-2 ml-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-          aria-controls="navbar-default"
-          aria-expanded="false"
+          // aria-controls="navbar-default"
+          // aria-expanded="false"
         >
           <span
             className="sr-onl absolute w-[1px] h-[1px] p-0 m-[-1px] overflow-hidden whitespace-nowrap border-0 "
@@ -183,8 +188,13 @@ const Navbar = () => {
           <IoIosMenu size="1.8rem" />
           {/* <IoIosClose size="1.8rem" /> */}
         </button>
-        <div className="hidden w-full md:block md:w-auto" id="navbar-default">
-          <ul className=" shadow-lg flex items-center text-center flex-col p-4 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-teal-700 dark:border-gray-700">
+        {/* /// items */}
+        <div
+          className={` ${
+            openNav ? "block" : "hidden"
+          } shadow-lg w-full md:block md:w-auto`}
+        >
+          <ul className="  flex items-center text-center flex-col p-4 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-teal-700 dark:border-gray-700">
             <li>
               <NavLink
                 to={"/"}
