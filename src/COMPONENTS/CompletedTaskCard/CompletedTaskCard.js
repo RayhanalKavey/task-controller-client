@@ -14,8 +14,14 @@ const CompletedTaskCard = ({
   handleDeleteTask,
 }) => {
   const { setRefetching } = useTask();
-  const { taskTitle, taskDetails, taskComment, startingDate, completionDate } =
-    task;
+  const {
+    taskTitle,
+    taskDetails,
+    taskComment,
+    startingDate,
+    completionDate,
+    importance,
+  } = task;
   const [toggleAdd, setToggleAdd] = useState(false);
   const [toggleEdit, setToggleEdit] = useState(false);
   //handle toggle Add
@@ -81,9 +87,28 @@ const CompletedTaskCard = ({
         {/* enD */}
       </div>
       <div className="flex flex-col px-5  pb-5 mt-2">
-        <h5 className="mb-1 text-xl font-medium text-teal-800 dark:text-white">
-          <span className="font-bold">Title: </span> {taskTitle}
-        </h5>
+        {/* task heading */}
+        <div className="flex justify-between items-center mt-2">
+          {" "}
+          <h5 className="mb-1 text-xl font-medium text-teal-800 dark:text-white">
+            <span className="font-bold">Title: </span> {taskTitle}
+          </h5>
+          <h3 className=" text-teal-800  dark:text-white  font-bold  pb-1">
+            <span className="uppercase">Importance:- </span>{" "}
+            <span
+              className={` rounded-md px-2 py-[.1rem] ${
+                importance === "To Do" && "bg-teal-400"
+              } ${importance === "Important" && "bg-orange-400"} ${
+                importance === "Must Do" && "bg-red-400"
+              } ${importance === "Job Application" && "bg-pink-400"} ${
+                importance === "Charlie-1 Task" && "bg-purple-400"
+              } 
+                `}
+            >
+              {importance}
+            </span>
+          </h3>
+        </div>
         <div className="relative flex  items-center mb-3">
           <div className="flex-grow border-t border-gray-200  "></div>
         </div>

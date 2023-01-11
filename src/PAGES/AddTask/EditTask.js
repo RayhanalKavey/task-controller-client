@@ -17,7 +17,13 @@ const EditTask = ({ task, handleToggle }) => {
   //------------- redirect user
   const navigate = useNavigate();
 
-  const taskImportance = ["To Do", "Important", "Must Do"];
+  const taskImportance = [
+    "To Do",
+    "Important",
+    "Must Do",
+    "Job Application",
+    "Charlie-1 Task",
+  ];
 
   ///Hook form
   const {

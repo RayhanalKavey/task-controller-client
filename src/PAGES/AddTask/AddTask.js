@@ -19,7 +19,13 @@ const AddTask = () => {
   const handleToggle = () => {
     setToggle(!toggle);
   };
-  const taskImportance = ["To Do", "Important", "Must Do"];
+  const taskImportance = [
+    "To Do",
+    "Important",
+    "Must Do",
+    "Job Application",
+    "Charlie-1 Task",
+  ];
 
   const { setRefetching } = useTask();
   const { user } = useAuth();

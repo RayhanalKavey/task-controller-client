@@ -34,6 +34,8 @@ const MyTaskCard = ({ task, handleCompleteTask, handleDeleteTask }) => {
                 importance === "To Do" && "bg-teal-400"
               } ${importance === "Important" && "bg-orange-400"} ${
                 importance === "Must Do" && "bg-red-400"
+              } ${importance === "Job Application" && "bg-pink-400"} ${
+                importance === "Charlie-1 Task" && "bg-purple-400"
               } 
                 `}
             >
